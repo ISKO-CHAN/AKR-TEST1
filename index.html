@@ -7,9 +7,6 @@
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Exo+2:wght@300;400;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 <style>
-/* ══════════════════════════════════════
-   ПЕРЕМЕННЫЕ (синхронизированы с style.css)
-══════════════════════════════════════ */
 :root {
   --primary-color: #00ffff;
   --secondary-color: #ff0080;
@@ -24,7 +21,6 @@
   --card-shadow: 0 10px 30px rgba(0,255,255,0.3);
 }
 
-/* ══ SCAN LINES ══ */
 body::before {
   content:'';
   position:fixed; inset:0;
@@ -35,7 +31,7 @@ body::before {
   pointer-events:none; z-index:9000;
 }
 
-/* ══ FLASH OVERLAYS ══ */
+
 #redFlash {
   position:fixed; inset:0;
   background:#ff0033;
@@ -66,7 +62,7 @@ body::before {
   100%{ clip-path:inset(0 0 0 0); filter:brightness(0.88); }
 }
 
-/* ══ GLITCH BARS ══ */
+
 .glitch-bar {
   position:fixed; left:0; width:100%; height:4px;
   background: linear-gradient(90deg,
@@ -74,7 +70,7 @@ body::before {
   pointer-events:none; opacity:0; z-index:8990;
 }
 
-/* ══ CORNERS ══ */
+
 .c-corner { position:fixed; width:42px; height:42px; pointer-events:none; z-index:200; }
 .c-corner::before, .c-corner::after {
   content:''; position:absolute;
@@ -93,14 +89,6 @@ body::before {
 .c-br { bottom:4px; right:4px; }
 .c-br::before { bottom:0;right:0; width:2px; height:30px; }
 .c-br::after  { bottom:0;right:0; height:2px; width:30px; }
-
-/* ══════════════════════════════════════
-   NAVBAR (из style.css, всё уже есть)
-══════════════════════════════════════ */
-
-/* ══════════════════════════════════════
-   HERO
-══════════════════════════════════════ */
 .hero {
   min-height:100vh;
   display:flex; align-items:center; justify-content:center; flex-direction:column;
@@ -124,7 +112,7 @@ body::before {
   100% { transform:translate(50px,50px); }
 }
 
-/* Radial vignette */
+
 .hero-vignette {
   position:absolute; inset:0;
   background: radial-gradient(ellipse at center,
@@ -132,7 +120,7 @@ body::before {
   pointer-events:none; z-index:1;
 }
 
-/* Floating dots */
+
 .hero-particles { position:absolute; inset:0; pointer-events:none; z-index:1; }
 .p-dot {
   position:absolute; width:4px; height:4px; border-radius:50%;
@@ -143,10 +131,10 @@ body::before {
   50%      { transform:translateY(-24px) scale(1.4); opacity:1; }
 }
 
-/* Inner */
+
 .hero-inner { position:relative; z-index:2; display:flex; flex-direction:column; align-items:center; }
 
-/* ══ GLITCH TITLE ══ */
+
 .g-title-wrap { position:relative; margin-bottom:8px; }
 
 .g-title {
@@ -213,7 +201,6 @@ body::before {
   91%{ opacity:0; }
 }
 
-/* ══ SUBTITLE ══ */
 .hero-sub {
   font-family:'Exo 2', sans-serif;
   font-size:clamp(0.7rem,2vw,1rem);
@@ -232,7 +219,6 @@ body::before {
   97%{ opacity:0.75; filter:none; }
 }
 
-/* ══ NEON DIVIDER ══ */
 .neon-div {
   width:min(360px,80vw); height:1px;
   background:linear-gradient(90deg, transparent, var(--primary-color), var(--secondary-color), transparent);
@@ -248,7 +234,6 @@ body::before {
   background:var(--bg-dark); padding:0 8px;
 }
 
-/* ══ DESCRIPTION ══ */
 .hero-desc {
   font-family:'Exo 2', sans-serif;
   font-size:clamp(0.9rem,1.5vw,1.1rem);
@@ -257,7 +242,6 @@ body::before {
   letter-spacing:0.4px;
 }
 
-/* ══ BUTTONS ══ */
 .hero-btns { display:flex; gap:18px; flex-wrap:wrap; justify-content:center; margin-bottom:56px; }
 
 .btn {
@@ -278,7 +262,6 @@ body::before {
 }
 .btn-secondary:hover { background:var(--primary-color); color:var(--bg-dark); box-shadow:var(--neon-glow); }
 
-/* ══ STATUS ══ */
 .hero-status {
   font-family:'Orbitron', monospace; font-size:0.58rem;
   letter-spacing:4px; color:rgba(0,255,255,0.28);
@@ -288,9 +271,6 @@ body::before {
   0%,100%{ opacity:1; } 48%{ opacity:1; } 50%{ opacity:0.05; } 52%{ opacity:1; }
 }
 
-/* ══════════════════════════════════════
-   FEATURES SECTION
-══════════════════════════════════════ */
 .features {
   padding:6rem 0;
   background:var(--bg-darker);
@@ -348,9 +328,6 @@ body::before {
   letter-spacing:3px; color:var(--text-gray); opacity:0.45;
 }
 
-/* ══════════════════════════════════════
-   CHAT MESSAGES
-══════════════════════════════════════ */
 .msg {
   position:fixed; max-width:230px;
   background:rgba(5,5,8,0.94);
@@ -375,13 +352,11 @@ body::before {
 .msg-body { color:#fff; font-weight:600; font-size:0.88rem; letter-spacing:0.4px; }
 .msg-ts   { display:block; text-align:right; font-size:0.56rem; letter-spacing:1px; color:rgba(176,176,176,0.28); margin-top:5px; }
 
-/* Positions */
 .p-bl { bottom:76px; left:20px; }
 .p-br { bottom:76px; right:20px; }
 .p-tl { top:84px; left:20px; }
 .p-tr { top:84px; right:20px; }
 
-/* Tails */
 .p-bl::after,.p-tl::after { content:''; position:absolute; }
 .p-bl::after { bottom:-7px; left:16px; border-width:7px 7px 0 0; border-style:solid; border-color:rgba(5,5,8,0.94) transparent transparent transparent; }
 .p-br::after { content:''; position:absolute; bottom:-7px; right:16px; border-width:7px 0 0 7px; border-style:solid; border-color:rgba(5,5,8,0.94) transparent transparent transparent; }
@@ -391,14 +366,12 @@ body::before {
 </head>
 <body>
 
-<!-- Overlays -->
 <div id="redFlash"></div>
 <div id="colorFlash"></div>
 <div id="freezeOverlay"></div>
 <div class="glitch-bar" id="gb1"></div>
 <div class="glitch-bar" id="gb2"></div>
 
-<!-- Corners -->
 <div class="c-corner c-tl"></div>
 <div class="c-corner c-tr"></div>
 <div class="c-corner c-bl"></div>
@@ -453,7 +426,6 @@ body::before {
   </div>
 </section>
 
-<!-- ══ FEATURES ══ -->
 <section class="features">
   <h2 class="sec-title">ПРОТОКОЛ ВТОРЖЕНИЯ</h2>
   <div class="feat-grid">
@@ -480,7 +452,6 @@ body::before {
   </div>
 </section>
 
-<!-- ══ FOOTER ══ -->
 <footer class="site-footer">
   &copy; 2064 AKR - АНГЕЛЫ КИБЕР-РЕЗОНАНСА &nbsp;|Designed by @isko37. Non-commercial fan project. All assets belong to their respective owners.&nbsp;  &nbsp;|&nbsp; СИСТЕМА АКТИВНА
 </footer>
@@ -523,7 +494,7 @@ body::before {
 </div>
 
 <script>
-// ─── PARTICLES ───────────────────────────────
+   
 const pc = document.getElementById('particles');
 [['#00ffff',0.08],['#ff0080',0.6],['#ff00ff',0.5]].forEach(([c,o],ci) => {
   for (let i = 0; i < 4; i++) {
@@ -538,7 +509,6 @@ const pc = document.getElementById('particles');
   }
 });
 
-// ─── FLASH ───────────────────────────────────
 const RF = document.getElementById('redFlash');
 const CF = document.getElementById('colorFlash');
 function flash(type) {
@@ -552,7 +522,6 @@ function flash(type) {
   }
 }
 
-// ─── MESSAGES ────────────────────────────────
 const POS = ['p-bl','p-br','p-tl','p-tr'];
 const MSGS = [
   {id:'msg1',flash:'red'},
@@ -580,7 +549,6 @@ function showMsg(cfg) {
   setTimeout(loop, d+2000);
 })();
 
-// ─── FREEZE ──────────────────────────────────
 const FZ = document.getElementById('freezeOverlay');
 (function loopFreeze() {
   setTimeout(()=>{
@@ -590,7 +558,6 @@ const FZ = document.getElementById('freezeOverlay');
   }, 9000+Math.random()*14000);
 })();
 
-// ─── GLITCH BARS ─────────────────────────────
 const GB1=document.getElementById('gb1'), GB2=document.getElementById('gb2');
 function fireBar(el) {
   el.style.top  = Math.random()*window.innerHeight+'px';
@@ -606,7 +573,6 @@ function fireBar(el) {
   }, 1100+Math.random()*3200);
 })();
 
-// ─── TITLE FLICKER ───────────────────────────
 const GT = document.querySelector('.g-title');
 (function loopFlicker() {
   setTimeout(()=>{
@@ -625,7 +591,6 @@ const GT = document.querySelector('.g-title');
     navMenu.classList.toggle("active");
   });
 
-  // Закрытие при клике на ссылку
   document.querySelectorAll(".nav-link").forEach(n => n.addEventListener("click", () => {
     hamburger.classList.remove("active");
     navMenu.classList.remove("active");
