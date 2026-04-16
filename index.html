@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AKR — Ангелы Кибер-Резонанса</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Exo+2:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+/* ══════════════════════════════════════
+   ПЕРЕМЕННЫЕ (синхронизированы с style.css)
+══════════════════════════════════════ */
+:root {
+  --primary-color: #00ffff;
+  --secondary-color: #ff0080;
+  --accent-color: #ff00ff;
+  --bg-dark: #0a0a0f;
+  --bg-darker: #050508;
+  --text-light: #ffffff;
+  --text-gray: #b0b0b0;
+  --gradient-primary: linear-gradient(135deg, #00ffff, #ff0080);
+  --gradient-secondary: linear-gradient(135deg, #ff0080, #ff00ff);
+  --neon-glow: 0 0 20px currentColor;
+  --card-shadow: 0 10px 30px rgba(0,255,255,0.3);
+}
+
+/* ══ SCAN LINES ══ */
+body::before {
+  content:'';
+  position:fixed; inset:0;
+  background: repeating-linear-gradient(
+    0deg, transparent, transparent 3px,
+    rgba(0,0,0,0.1) 3px, rgba(0,0,0,0.1) 4px
+  );
+  pointer-events:none; z-index:9000;
+}
+
+/* ══ FLASH OVERLAYS ══ */
+#redFlash {
+  position:fixed; inset:0;
+  background:#ff0033;
+  opacity:0; pointer-events:none; z-index:9998;
+  transition: opacity 0.04s;
+}
+#colorFlash {
+  position:fixed; inset:0;
+  opacity:0; pointer-events:none; z-index:9997;
+  transition: opacity 0.04s;
+}
+
+/* ══ FREEZE ══ */
+#freezeOverlay {
+  position:fixed; inset:0;
+  pointer-events:none; z-index:9996; opacity:0;
+}
+#freezeOverlay.active {
+  opacity:1;
+  animation: freezeAnim 0.07s steps(1) infinite;
+}
+@keyframes freezeAnim {
+  0%  { clip-path:inset(0 0 0 0); filter:brightness(0.88) contrast(1.1); }
+  20% { clip-path:inset(18% 0 58% 0); filter:brightness(1.05); }
+  40% { clip-path:inset(0 0 0 0); filter:brightness(0.9); }
+  60% { clip-path:inset(52% 0 12% 0); filter:brightness(1.02); }
+  80% { clip-path:inset(0 0 0 0); filter:brightness(0.92); }
+  100%{ clip-path:inset(0 0 0 0); filter:brightness(0.88); }
+}
+
+/* ══ GLITCH BARS ══ */
+.glitch-bar {
+  position:fixed; left:0; width:100%; height:4px;
+  background: linear-gradient(90deg,
+    transparent, rgba(0,255,255,0.2), rgba(255,0,128,0.15), transparent);
+  pointer-events:none; opacity:0; z-index:8990;
+}
+
+/* ══ CORNERS ══ */
+.c-corner { position:fixed; width:42px; height:42px; pointer-events:none; z-index:200; }
+.c-corner::before, .c-corner::after {
+  content:''; position:absolute;
+  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+  box-shadow: 0 0 8px rgba(0,255,255,0.5);
+}
+.c-tl { top:72px; left:4px; }
+.c-tl::before { top:0;left:0; width:2px; height:30px; }
+.c-tl::after  { top:0;left:0; height:2px; width:30px; }
+.c-tr { top:72px; right:4px; }
+.c-tr::before { top:0;right:0; width:2px; height:30px; }
+.c-tr::after  { top:0;right:0; height:2px; width:30px; }
+.c-bl { bottom:4px; left:4px; }
+.c-bl::before { bottom:0;left:0; width:2px; height:30px; }
+.c-bl::after  { bottom:0;left:0; height:2px; width:30px; }
+.c-br { bottom:4px; right:4px; }
+.c-br::before { bottom:0;right:0; width:2px; height:30px; }
+.c-br::after  { bottom:0;right:0; height:2px; width:30px; }
+
+/* ══════════════════════════════════════
+   NAVBAR (из style.css, всё уже есть)
+══════════════════════════════════════ */
+
+/* ══════════════════════════════════════
+   HERO
+══════════════════════════════════════ */
+.hero {
+  min-height:100vh;
+  display:flex; align-items:center; justify-content:center; flex-direction:column;
+  text-align:center;
+  position:relative; overflow:hidden;
+  padding: 120px 20px 80px;
+  background: var(--bg-dark);
+}
+
+/* Grid */
+.cyber-grid {
+  position:absolute; inset:0;
+  background-image:
+    linear-gradient(rgba(0,255,255,0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,255,255,0.08) 1px, transparent 1px);
+  background-size:50px 50px;
+  animation: gridMove 20s linear infinite;
+}
+@keyframes gridMove {
+  0%   { transform:translate(0,0); }
+  100% { transform:translate(50px,50px); }
+}
+
+/* Radial vignette */
+.hero-vignette {
+  position:absolute; inset:0;
+  background: radial-gradient(ellipse at center,
+    transparent 25%, rgba(10,10,15,0.55) 70%, rgba(10,10,15,0.97) 100%);
+  pointer-events:none; z-index:1;
+}
+
+/* Floating dots */
+.hero-particles { position:absolute; inset:0; pointer-events:none; z-index:1; }
+.p-dot {
+  position:absolute; width:4px; height:4px; border-radius:50%;
+  animation: pFloat linear infinite;
+}
+@keyframes pFloat {
+  0%,100% { transform:translateY(0) scale(1); opacity:0.7; }
+  50%      { transform:translateY(-24px) scale(1.4); opacity:1; }
+}
+
+/* Inner */
+.hero-inner { position:relative; z-index:2; display:flex; flex-direction:column; align-items:center; }
+
+/* ══ GLITCH TITLE ══ */
+.g-title-wrap { position:relative; margin-bottom:8px; }
+
+.g-title {
+  font-family:'Orbitron', monospace;
+  font-size:clamp(5rem,13vw,10rem);
+  font-weight:900;
+  background: var(--gradient-primary);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+  letter-spacing:14px;
+  line-height:1;
+  display:block;
+  position:relative;
+  filter: drop-shadow(0 0 25px rgba(0,255,255,0.55));
+  animation: gPulse 4s ease-in-out infinite, gJitter 7s 2s infinite;
+}
+
+.g-title::before, .g-title::after {
+  content:'AKR';
+  position:absolute; top:0; left:0; width:100%;
+  font-family:'Orbitron',monospace; font-size:inherit; font-weight:900;
+  letter-spacing:14px;
+  -webkit-text-fill-color:transparent;
+  background-clip:text; -webkit-background-clip:text;
+}
+.g-title::before {
+  background: var(--gradient-secondary);
+  clip-path:polygon(0 0,100% 0,100% 40%,0 40%);
+  animation: gLayerA 7s 2s infinite;
+}
+.g-title::after {
+  background: linear-gradient(135deg,#00ffff,#00ffff);
+  clip-path:polygon(0 60%,100% 60%,100% 100%,0 100%);
+  animation: gLayerB 7s 2.1s infinite;
+}
+
+@keyframes gPulse {
+  0%,100%{ filter:drop-shadow(0 0 25px rgba(0,255,255,0.55)); }
+  50%    { filter:drop-shadow(0 0 45px rgba(0,255,255,0.9)) drop-shadow(0 0 70px rgba(255,0,128,0.35)); }
+}
+@keyframes gJitter {
+  0%,87%,100%{ transform:none; }
+  88%{ transform:skewX(-4deg) translateX(5px); }
+  89%{ transform:skewX(3deg) translateX(-4px); }
+  90%{ transform:none; }
+  92%{ transform:skewX(-2deg) translateX(3px); }
+  93%{ transform:none; }
+}
+@keyframes gLayerA {
+  0%,86%,100%{ transform:none; opacity:0; }
+  87%{ transform:translateX(-8px) skewX(-3deg); opacity:0.85; }
+  88%{ transform:translateX(5px); opacity:0.5; }
+  89%{ opacity:0; }
+  91%{ transform:translateX(-4px); opacity:0.35; }
+  92%{ opacity:0; }
+}
+@keyframes gLayerB {
+  0%,85%,100%{ transform:none; opacity:0; }
+  86%{ transform:translateX(7px) skewX(2deg); opacity:0.8; }
+  87%{ transform:translateX(-5px); opacity:0.45; }
+  88%{ opacity:0; }
+  90%{ transform:translateX(4px); opacity:0.3; }
+  91%{ opacity:0; }
+}
+
+/* ══ SUBTITLE ══ */
+.hero-sub {
+  font-family:'Exo 2', sans-serif;
+  font-size:clamp(0.7rem,2vw,1rem);
+  font-weight:300;
+  letter-spacing:7px;
+  color:var(--text-gray);
+  text-transform:uppercase;
+  margin-bottom:30px;
+  animation: subGlitch 8s 3s infinite;
+}
+@keyframes subGlitch {
+  0%,93%,100%{ opacity:0.75; transform:none; filter:none; }
+  94%{ opacity:0.3; transform:translateX(-5px); filter:blur(1px); }
+  95%{ opacity:0.9; transform:translateX(4px); }
+  96%{ opacity:0.6; filter:blur(0.5px); transform:none; }
+  97%{ opacity:0.75; filter:none; }
+}
+
+/* ══ NEON DIVIDER ══ */
+.neon-div {
+  width:min(360px,80vw); height:1px;
+  background:linear-gradient(90deg, transparent, var(--primary-color), var(--secondary-color), transparent);
+  margin:0 auto 30px;
+  box-shadow:0 0 10px rgba(0,255,255,0.5);
+  position:relative;
+}
+.neon-div::before {
+  content:'◈'; position:absolute; left:50%; top:50%;
+  transform:translate(-50%,-50%);
+  color:var(--secondary-color); font-size:0.85rem;
+  text-shadow:0 0 12px var(--secondary-color);
+  background:var(--bg-dark); padding:0 8px;
+}
+
+/* ══ DESCRIPTION ══ */
+.hero-desc {
+  font-family:'Exo 2', sans-serif;
+  font-size:clamp(0.9rem,1.5vw,1.1rem);
+  line-height:1.9; color:var(--text-gray);
+  max-width:560px; margin:0 auto 42px;
+  letter-spacing:0.4px;
+}
+
+/* ══ BUTTONS ══ */
+.hero-btns { display:flex; gap:18px; flex-wrap:wrap; justify-content:center; margin-bottom:56px; }
+
+.btn {
+  font-family:'Exo 2', sans-serif;
+  padding:1rem 2rem; border:none; border-radius:8px;
+  font-size:1rem; font-weight:600; cursor:pointer;
+  transition:all 0.3s ease; text-transform:uppercase;
+  letter-spacing:2px; text-decoration:none; display:inline-block;
+}
+.btn-primary {
+  background:var(--gradient-primary); color:var(--bg-dark);
+  box-shadow:var(--card-shadow);
+}
+.btn-primary:hover { transform:translateY(-3px); box-shadow:0 15px 40px rgba(0,255,255,0.5); }
+.btn-secondary {
+  background:transparent; color:var(--primary-color);
+  border:2px solid var(--primary-color);
+}
+.btn-secondary:hover { background:var(--primary-color); color:var(--bg-dark); box-shadow:var(--neon-glow); }
+
+/* ══ STATUS ══ */
+.hero-status {
+  font-family:'Orbitron', monospace; font-size:0.58rem;
+  letter-spacing:4px; color:rgba(0,255,255,0.28);
+  animation: statusBlink 3.5s ease-in-out infinite;
+}
+@keyframes statusBlink {
+  0%,100%{ opacity:1; } 48%{ opacity:1; } 50%{ opacity:0.05; } 52%{ opacity:1; }
+}
+
+/* ══════════════════════════════════════
+   FEATURES SECTION
+══════════════════════════════════════ */
+.features {
+  padding:6rem 0;
+  background:var(--bg-darker);
+  position:relative;
+}
+.features::before {
+  content:''; position:absolute; top:0; left:0; right:0; height:1px;
+  background:linear-gradient(90deg, transparent, var(--primary-color), var(--secondary-color), transparent);
+  box-shadow:0 0 12px rgba(0,255,255,0.35);
+}
+
+.sec-title {
+  font-family:'Orbitron', monospace;
+  font-size:clamp(1.2rem,3vw,2rem);
+  text-align:center; margin-bottom:48px;
+  background:var(--gradient-secondary);
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+}
+
+.feat-grid {
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(230px,1fr));
+  gap:22px; max-width:1100px; margin:0 auto; padding:0 20px;
+}
+
+.feat-card {
+  border:1px solid rgba(0,255,255,0.18);
+  background:rgba(0,255,255,0.025);
+  padding:30px 22px; border-radius:12px;
+  position:relative; overflow:hidden;
+  transition:border-color 0.3s, box-shadow 0.3s, transform 0.3s;
+}
+.feat-card::before {
+  content:''; position:absolute; top:0; left:0; right:0; height:2px;
+  background:var(--gradient-primary); transform:scaleX(0);
+  transition:transform 0.35s ease;
+}
+.feat-card:hover { border-color:rgba(0,255,255,0.4); box-shadow:0 10px 30px rgba(0,255,255,0.15); transform:translateY(-4px); }
+.feat-card:hover::before { transform:scaleX(1); }
+
+.feat-icon { font-size:2rem; margin-bottom:14px; display:block; }
+.feat-title {
+  font-family:'Orbitron', monospace; font-size:0.75rem;
+  letter-spacing:3px; text-transform:uppercase;
+  color:var(--primary-color); margin-bottom:10px;
+}
+.feat-text { font-size:0.85rem; line-height:1.75; color:var(--text-gray); }
+
+/* ══ FOOTER ══ */
+.site-footer {
+  background:var(--bg-darker);
+  border-top:1px solid rgba(0,255,255,0.15);
+  text-align:center; padding:26px 20px;
+  font-family:'Exo 2', sans-serif; font-size:0.65rem;
+  letter-spacing:3px; color:var(--text-gray); opacity:0.45;
+}
+
+/* ══════════════════════════════════════
+   CHAT MESSAGES
+══════════════════════════════════════ */
+.msg {
+  position:fixed; max-width:230px;
+  background:rgba(5,5,8,0.94);
+  border-radius:14px;
+  padding:11px 15px 9px;
+  font-family:'Exo 2', sans-serif;
+  font-size:0.87rem; line-height:1.5;
+  pointer-events:none; z-index:9500;
+  opacity:0; transform:scale(0.8) translateY(14px);
+  transition: opacity 0.32s cubic-bezier(.22,1,.36,1), transform 0.32s cubic-bezier(.22,1,.36,1);
+}
+.msg.show { opacity:1; transform:scale(1) translateY(0); }
+
+/* Типы */
+.msg.t-red    { border:1px solid rgba(255,0,51,0.55); box-shadow:0 0 22px rgba(255,0,51,0.18); }
+.msg.t-orange { border:1px solid rgba(255,102,0,0.55); box-shadow:0 0 22px rgba(255,102,0,0.18); }
+.msg.t-purple { border:1px solid rgba(153,0,255,0.55); box-shadow:0 0 22px rgba(153,0,255,0.18); }
+
+.msg-head { display:flex; align-items:center; gap:7px; margin-bottom:5px; }
+.msg-dot  { width:7px; height:7px; border-radius:50%; flex-shrink:0; }
+.msg-lbl  { font-family:'Orbitron',monospace; font-size:0.52rem; letter-spacing:2px; color:rgba(176,176,176,0.4); }
+.msg-body { color:#fff; font-weight:600; font-size:0.88rem; letter-spacing:0.4px; }
+.msg-ts   { display:block; text-align:right; font-size:0.56rem; letter-spacing:1px; color:rgba(176,176,176,0.28); margin-top:5px; }
+
+/* Positions */
+.p-bl { bottom:76px; left:20px; }
+.p-br { bottom:76px; right:20px; }
+.p-tl { top:84px; left:20px; }
+.p-tr { top:84px; right:20px; }
+
+/* Tails */
+.p-bl::after,.p-tl::after { content:''; position:absolute; }
+.p-bl::after { bottom:-7px; left:16px; border-width:7px 7px 0 0; border-style:solid; border-color:rgba(5,5,8,0.94) transparent transparent transparent; }
+.p-br::after { content:''; position:absolute; bottom:-7px; right:16px; border-width:7px 0 0 7px; border-style:solid; border-color:rgba(5,5,8,0.94) transparent transparent transparent; }
+.p-tl::before { content:''; position:absolute; top:-7px; left:16px; border-width:0 7px 7px 0; border-style:solid; border-color:transparent rgba(5,5,8,0.94) transparent transparent; transform:scaleX(-1); }
+.p-tr::before { content:''; position:absolute; top:-7px; right:16px; border-width:0 0 7px 7px; border-style:solid; border-color:transparent transparent rgba(5,5,8,0.94) transparent; }
+</style>
+</head>
+<body>
+
+<!-- Overlays -->
+<div id="redFlash"></div>
+<div id="colorFlash"></div>
+<div id="freezeOverlay"></div>
+<div class="glitch-bar" id="gb1"></div>
+<div class="glitch-bar" id="gb2"></div>
+
+<!-- Corners -->
+<div class="c-corner c-tl"></div>
+<div class="c-corner c-tr"></div>
+<div class="c-corner c-bl"></div>
+<div class="c-corner c-br"></div>
+
+<!-- ══ NAVBAR ══ -->
+<nav class="navbar">
+  <div class="nav-container">
+    <div class="nav-logo">
+      <h1>AKR</h1>
+      <span>Ангелы Кибер-Резонанса</span>
+    </div>
+    <ul class="nav-menu">
+      <li><a href="history.html"    class="nav-link">История</a></li>
+      <li><a href="characters.html" class="nav-link">Персонажи</a></li>
+      <li><a href="download.html"   class="nav-link">Скачать</a></li>
+    </ul>
+    <div class="hamburger">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
+</nav>
+
+<!-- ══ HERO ══ -->
+<section class="hero">
+  <div class="cyber-grid"></div>
+  <div class="hero-vignette"></div>
+  <div class="hero-particles" id="particles"></div>
+
+  <div class="hero-inner">
+    <div class="g-title-wrap">
+      <span class="g-title">AKR</span>
+    </div>
+
+    <p class="hero-sub">Ангелы&nbsp;&nbsp;Кибер&#8209;Резонанса</p>
+    <div class="neon-div"></div>
+
+    <p class="hero-desc">
+      Погрузитесь в мир будущего, где человечество борется за выживание
+      с помощью элитных воительниц в механизированных костюмах.
+      Соберите свою команду и спасите мир от киберугрозы.
+    </p>
+
+    <div class="hero-btns">
+      <a class="btn btn-primary"   href="game_play.html">▶ Играть сейчас</a>
+      <a class="btn btn-secondary" href="history.html">Трейлер</a>
+    </div>
+
+    <div class="hero-status">
+      [ SYSTEM STATUS: ONLINE ]&nbsp;&nbsp;|&nbsp;&nbsp;BUILD 4.7.2&nbsp;&nbsp;|&nbsp;&nbsp;CYBER-RESONANCE ACTIVE
+    </div>
+  </div>
+</section>
+
+<!-- ══ FEATURES ══ -->
+<section class="features">
+  <h2 class="sec-title">ПРОТОКОЛ ВТОРЖЕНИЯ</h2>
+  <div class="feat-grid">
+    <div class="feat-card">
+      <span class="feat-icon">⚡</span>
+      <div class="feat-title">Боевая система</div>
+      <div class="feat-text">Уникальные механики ближнего и дальнего боя с синхронными атаками отряда в реальном времени.</div>
+    </div>
+    <div class="feat-card">
+      <span class="feat-icon">👁</span>
+      <div class="feat-title">Персонажи</div>
+      <div class="feat-text">Более 20 воительниц с индивидуальными историями, способностями и судьбами.</div>
+    </div>
+    <div class="feat-card">
+      <span class="feat-icon">🌐</span>
+      <div class="feat-title">Открытый мир</div>
+      <div class="feat-text">Исследуйте разрушенные мегаполисы, подземные бункеры и кибернетические зоны.</div>
+    </div>
+    <div class="feat-card">
+      <span class="feat-icon">🔴</span>
+      <div class="feat-title">Угроза</div>
+      <div class="feat-text">Разгадайте тайну киберугрозы — она ближе, чем кажется. Не все союзники те, кем выглядят.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ FOOTER ══ -->
+<footer class="site-footer">
+  &copy; 2024 AKR — АНГЕЛЫ КИБЕР-РЕЗОНАНСА &nbsp;|&nbsp; ВСЕ ПРАВА ЗАЩИЩЕНЫ &nbsp;|&nbsp; СИСТЕМА АКТИВНА
+</footer>
+
+<!-- ══ MESSAGE BUBBLES ══ -->
+<div class="msg t-red" id="msg1">
+  <div class="msg-head">
+    <span class="msg-dot" style="background:#ff0033;box-shadow:0 0 8px #ff0033;"></span>
+    <span class="msg-lbl">SYSTEM // ENCRYPTED</span>
+  </div>
+  <div class="msg-body">Доверие?</div>
+  <span class="msg-ts">??:??</span>
+</div>
+
+<div class="msg t-red" id="msg2">
+  <div class="msg-head">
+    <span class="msg-dot" style="background:#ff0033;box-shadow:0 0 8px #ff0033;"></span>
+    <span class="msg-lbl">SYSTEM // ENCRYPTED</span>
+  </div>
+  <div class="msg-body">Меня бросили?</div>
+  <span class="msg-ts">??:??</span>
+</div>
+
+<div class="msg t-orange" id="msg3">
+  <div class="msg-head">
+    <span class="msg-dot" style="background:#ff6600;box-shadow:0 0 8px #ff6600;"></span>
+    <span class="msg-lbl">SYSTEM // WARNING</span>
+  </div>
+  <div class="msg-body">Идеальный план</div>
+  <span class="msg-ts">??:??</span>
+</div>
+
+<div class="msg t-purple" id="msg4">
+  <div class="msg-head">
+    <span class="msg-dot" style="background:#9900ff;box-shadow:0 0 8px #9900ff;"></span>
+    <span class="msg-lbl">SYSTEM // CLASSIFIED</span>
+  </div>
+  <div class="msg-body">месть</div>
+  <span class="msg-ts">??:??</span>
+</div>
+
+<script>
+// ─── PARTICLES ───────────────────────────────
+const pc = document.getElementById('particles');
+[['#00ffff',0.08],['#ff0080',0.6],['#ff00ff',0.5]].forEach(([c,o],ci) => {
+  for (let i = 0; i < 4; i++) {
+    const d = document.createElement('div');
+    d.className = 'p-dot';
+    d.style.cssText = `
+      left:${Math.random()*100}%;top:${Math.random()*100}%;
+      background:${c};box-shadow:0 0 8px ${c};opacity:${o};
+      animation-duration:${4+Math.random()*5}s;
+      animation-delay:${Math.random()*4}s;`;
+    pc.appendChild(d);
+  }
+});
+
+// ─── FLASH ───────────────────────────────────
+const RF = document.getElementById('redFlash');
+const CF = document.getElementById('colorFlash');
+function flash(type) {
+  if (type==='red') {
+    RF.style.opacity='0.28';
+    setTimeout(()=>RF.style.opacity='0',500);
+  } else {
+    CF.style.background = type==='orange' ? '#ff6600' : '#9900ff';
+    CF.style.opacity = '0.2';
+    setTimeout(()=>CF.style.opacity='0',500);
+  }
+}
+
+// ─── MESSAGES ────────────────────────────────
+const POS = ['p-bl','p-br','p-tl','p-tr'];
+const MSGS = [
+  {id:'msg1',flash:'red'},
+  {id:'msg2',flash:'red'},
+  {id:'msg3',flash:'orange'},
+  {id:'msg4',flash:'purple'},
+];
+
+function showMsg(cfg) {
+  const el = document.getElementById(cfg.id);
+  POS.forEach(p=>el.classList.remove(p));
+  el.classList.add(POS[Math.floor(Math.random()*POS.length)]);
+  const now = new Date();
+  el.querySelector('.msg-ts').textContent =
+    now.getHours().toString().padStart(2,'0')+':'+now.getMinutes().toString().padStart(2,'0');
+  flash(cfg.flash);
+  el.classList.add('show');
+  setTimeout(()=>el.classList.remove('show'), 3500+Math.random()*2200);
+}
+
+(function loop() {
+  const sh = [...MSGS].sort(()=>Math.random()-0.5);
+  let d = 1800+Math.random()*2500;
+  sh.forEach(m=>{ setTimeout(()=>showMsg(m),d); d+=5000+Math.random()*7000; });
+  setTimeout(loop, d+2000);
+})();
+
+// ─── FREEZE ──────────────────────────────────
+const FZ = document.getElementById('freezeOverlay');
+(function loopFreeze() {
+  setTimeout(()=>{
+    FZ.classList.add('active');
+    setTimeout(()=>FZ.classList.remove('active'), 350+Math.random()*650);
+    loopFreeze();
+  }, 9000+Math.random()*14000);
+})();
+
+// ─── GLITCH BARS ─────────────────────────────
+const GB1=document.getElementById('gb1'), GB2=document.getElementById('gb2');
+function fireBar(el) {
+  el.style.top  = Math.random()*window.innerHeight+'px';
+  el.style.height = (2+Math.random()*10)+'px';
+  el.style.opacity = String(0.4+Math.random()*0.6);
+  setTimeout(()=>el.style.opacity='0', 65+Math.random()*110);
+}
+(function loopBars() {
+  setTimeout(()=>{
+    fireBar(GB1);
+    setTimeout(()=>fireBar(GB2), 25+Math.random()*65);
+    loopBars();
+  }, 1100+Math.random()*3200);
+})();
+
+// ─── TITLE FLICKER ───────────────────────────
+const GT = document.querySelector('.g-title');
+(function loopFlicker() {
+  setTimeout(()=>{
+    GT.style.filter='drop-shadow(0 0 40px #fff) brightness(2.2) blur(2px)';
+    setTimeout(()=>GT.style.filter='', 50+Math.random()*70);
+    loopFlicker();
+  }, 5000+Math.random()*12000);
+})();
+</script>
+</body>
+</html>
