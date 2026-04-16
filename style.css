@@ -913,9 +913,22 @@ body {
 
 /* Адаптивность */
 @media (max-width: 768px) {
-    .nav-menu {
-        display: none;
+    .nav-menu.active {
+        display: flex !important;
+        position: absolute;
+        top: 70px;
+        left: 0;
+        width: 100%;
+        flex-direction: column;
+        background: rgba(10,10,15,0.98);
+        padding: 20px 0;
+        gap: 20px;
+        z-index: 999;
+    .navbar {
+    z-index: 10000;
+}
     }
+}
 
     .nav-menu.active {
         display: flex;
