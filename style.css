@@ -916,10 +916,16 @@ body {
     .nav-menu {
         display: none;
     }
-    
+
+    .nav-menu.active {
+        display: flex;
+        flex-direction: column;
+    }
+
     .hamburger {
         display: flex;
     }
+}
     
     .hero-content {
         grid-template-columns: 1fr;
@@ -1012,4 +1018,17 @@ body {
 
 ::-webkit-scrollbar-thumb:hover {
     background: var(--primary-color);
+}
+.nav-menu.active {
+    display: flex;
+    position: absolute;
+    top: 70px;
+    right: 0;
+    background: rgba(10,10,15,0.98);
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 0;
+    gap: 20px;
+    border-top: 1px solid rgba(0,255,255,0.3);
 }
