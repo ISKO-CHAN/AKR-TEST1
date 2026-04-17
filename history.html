@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>История — AKR</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Exo+2:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="nav.css">
+<style>
+:root{
+  --primary:#00ffff;--secondary:#ff0080;--accent:#ff00ff;
+  --bg:#0a0a0f;--bg2:#050508;--text:#fff;--gray:#b0b0b0;
+  --gp:linear-gradient(135deg,#00ffff,#ff0080);
+  --gs:linear-gradient(135deg,#ff0080,#ff00ff);
+  --shadow:0 10px 30px rgba(0,255,255,.3);
+}
+*{margin:0;padding:0;box-sizing:border-box;}html{scroll-behavior:smooth;}
+body{font-family:'Exo 2',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;line-height:1.6;}
+body::before{content:'';position:fixed;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,.1) 3px,rgba(0,0,0,.1) 4px);pointer-events:none;z-index:9000;}
+
+#redFlash{position:fixed;inset:0;background:#ff0033;opacity:0;pointer-events:none;z-index:9998;transition:opacity .05s;}
+#colorFlash{position:fixed;inset:0;opacity:0;pointer-events:none;z-index:9997;transition:opacity .05s;}
+#freezeOverlay{position:fixed;inset:0;pointer-events:none;z-index:9996;opacity:0;}
+#freezeOverlay.active{opacity:1;animation:frz .07s steps(1) infinite;}
+@keyframes frz{0%{clip-path:inset(0 0 0 0);filter:brightness(.88) contrast(1.1);}20%{clip-path:inset(18% 0 58% 0);filter:brightness(1.05);}40%{clip-path:inset(0 0 0 0);filter:brightness(.9);}60%{clip-path:inset(52% 0 12% 0);filter:brightness(1.02);}80%{clip-path:inset(0 0 0 0);filter:brightness(.92);}100%{clip-path:inset(0 0 0 0);filter:brightness(.88);}}
+.gbar{position:fixed;left:0;width:100%;height:4px;background:linear-gradient(90deg,transparent,rgba(0,255,255,.2),rgba(255,0,128,.15),transparent);pointer-events:none;opacity:0;z-index:8990;}
+
+.cc{position:fixed;width:42px;height:42px;pointer-events:none;z-index:200;}
+.cc::before,.cc::after{content:'';position:absolute;background:var(--gp);box-shadow:0 0 8px rgba(0,255,255,.5);}
+.ctl{top:72px;left:4px;}.ctl::before{top:0;left:0;width:2px;height:30px;}.ctl::after{top:0;left:0;height:2px;width:30px;}
+.ctr{top:72px;right:4px;}.ctr::before{top:0;right:0;width:2px;height:30px;}.ctr::after{top:0;right:0;height:2px;width:30px;}
+.cbl{bottom:4px;left:4px;}.cbl::before{bottom:0;left:0;width:2px;height:30px;}.cbl::after{bottom:0;left:0;height:2px;width:30px;}
+.cbr{bottom:4px;right:4px;}.cbr::before{bottom:0;right:0;width:2px;height:30px;}.cbr::after{bottom:0;right:0;height:2px;width:30px;}
+
+/* PAGE HERO */
+.page-hero{min-height:45vh;display:flex;align-items:center;justify-content:center;flex-direction:column;text-align:center;position:relative;overflow:hidden;padding:130px 20px 60px;}
+.cyber-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(0,255,255,.07) 1px,transparent 1px),linear-gradient(90deg,rgba(0,255,255,.07) 1px,transparent 1px);background-size:50px 50px;animation:gridMove 20s linear infinite;}
+@keyframes gridMove{0%{transform:translate(0,0);}100%{transform:translate(50px,50px);}}
+.page-hero-vig{position:absolute;inset:0;background:radial-gradient(ellipse at center,transparent 20%,rgba(10,10,15,.6) 70%,rgba(10,10,15,.98) 100%);z-index:1;}
+.page-hero-inner{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;}
+.ph-label{font-family:'Orbitron',monospace;font-size:.65rem;letter-spacing:6px;color:var(--secondary);text-transform:uppercase;margin-bottom:16px;text-shadow:0 0 12px var(--secondary);animation:lbPl 3s ease-in-out infinite;}
+@keyframes lbPl{0%,100%{opacity:1;}48%{opacity:1;}50%{opacity:.1;}52%{opacity:1;}}
+.ph-title{font-family:'Orbitron',monospace;font-size:clamp(2.5rem,7vw,5.5rem);font-weight:900;background:var(--gp);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:8px;line-height:1.1;filter:drop-shadow(0 0 20px rgba(0,255,255,.5));animation:phGl 8s 1s infinite;}
+@keyframes phGl{0%,90%,100%{transform:none;}91%{transform:skewX(-3deg) translateX(4px);}92%{transform:skewX(2deg) translateX(-3px);}93%{transform:none;}}
+.ph-sub{font-family:'Exo 2',sans-serif;font-size:clamp(.75rem,1.5vw,.95rem);letter-spacing:4px;color:var(--gray);margin-top:14px;text-transform:uppercase;}
+.neon-div{width:min(360px,80vw);height:1px;background:linear-gradient(90deg,transparent,var(--primary),var(--secondary),transparent);margin:28px auto 0;box-shadow:0 0 10px rgba(0,255,255,.5);position:relative;}
+.neon-div::before{content:'◈';position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);color:var(--secondary);font-size:.85rem;text-shadow:0 0 12px var(--secondary);background:var(--bg);padding:0 8px;}
+
+/* TIMELINE */
+.history-section{padding:5rem 0 7rem;background:var(--bg);position:relative;}
+.history-section::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--primary),var(--secondary),transparent);box-shadow:0 0 12px rgba(0,255,255,.3);}
+.timeline{position:relative;max-width:960px;margin:0 auto;padding:0 24px;}
+.timeline::before{content:'';position:absolute;left:50%;top:0;bottom:0;width:2px;background:linear-gradient(180deg,transparent,var(--primary) 8%,var(--secondary) 50%,var(--accent) 92%,transparent);transform:translateX(-50%);box-shadow:0 0 10px rgba(0,255,255,.3);}
+
+.tl-item{display:grid;grid-template-columns:1fr 80px 1fr;align-items:start;margin-bottom:5rem;opacity:0;transform:translateY(30px);transition:opacity .6s ease,transform .6s ease;}
+.tl-item.visible{opacity:1;transform:translateY(0);}
+.tl-item:nth-child(odd) .tl-content{grid-column:1;text-align:right;padding-right:32px;}
+.tl-item:nth-child(odd) .tl-year{grid-column:2;}
+.tl-item:nth-child(odd) .tl-empty{grid-column:3;}
+.tl-item:nth-child(even) .tl-empty{grid-column:1;}
+.tl-item:nth-child(even) .tl-year{grid-column:2;}
+.tl-item:nth-child(even) .tl-content{grid-column:3;text-align:left;padding-left:32px;}
+
+.tl-year{display:flex;flex-direction:column;align-items:center;position:relative;z-index:2;padding-top:4px;}
+.tl-dot{width:18px;height:18px;border-radius:50%;background:var(--bg);border:2px solid var(--primary);box-shadow:0 0 14px rgba(0,255,255,.7),0 0 28px rgba(0,255,255,.3);margin-bottom:6px;flex-shrink:0;animation:dotPl 2.5s ease-in-out infinite;}
+@keyframes dotPl{0%,100%{box-shadow:0 0 14px rgba(0,255,255,.7),0 0 28px rgba(0,255,255,.3);}50%{box-shadow:0 0 20px rgba(255,0,128,.8),0 0 40px rgba(255,0,128,.3);border-color:var(--secondary);}}
+.tl-yr-num{font-family:'Orbitron',monospace;font-size:.9rem;font-weight:700;background:var(--gs);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:2px;}
+
+.tl-card{background:rgba(0,255,255,.03);border:1px solid rgba(0,255,255,.15);border-radius:14px;padding:26px 28px;position:relative;overflow:hidden;transition:border-color .3s,box-shadow .3s;}
+.tl-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--gp);transform:scaleX(0);transition:transform .35s;}
+.tl-card:hover{border-color:rgba(0,255,255,.38);box-shadow:0 8px 32px rgba(0,255,255,.12);}
+.tl-card:hover::before{transform:scaleX(1);}
+.tl-item:nth-child(odd) .tl-card{border-right:2px solid rgba(0,255,255,.2);}
+.tl-item:nth-child(even) .tl-card{border-left:2px solid rgba(0,255,255,.2);}
+.tl-card-tag{font-family:'Orbitron',monospace;font-size:.55rem;letter-spacing:4px;color:var(--secondary);text-transform:uppercase;margin-bottom:10px;display:inline-block;}
+.tl-card-title{font-family:'Orbitron',monospace;font-size:clamp(.9rem,2vw,1.15rem);font-weight:700;color:var(--primary);margin-bottom:14px;letter-spacing:1px;text-shadow:0 0 12px rgba(0,255,255,.3);}
+.tl-card-text{font-size:.88rem;line-height:1.85;color:var(--gray);}
+.tl-card-text.long{max-height:120px;overflow:hidden;mask-image:linear-gradient(180deg,#000 60%,transparent 100%);-webkit-mask-image:linear-gradient(180deg,#000 60%,transparent 100%);transition:max-height .5s,mask-image .5s,-webkit-mask-image .5s;}
+.tl-card-text.long.expanded{max-height:1000px;mask-image:none;-webkit-mask-image:none;}
+.read-more{margin-top:14px;font-family:'Orbitron',monospace;font-size:.6rem;letter-spacing:3px;color:var(--primary);background:transparent;border:1px solid rgba(0,255,255,.3);padding:6px 14px;border-radius:6px;cursor:pointer;transition:background .2s;text-transform:uppercase;}
+.read-more:hover{background:rgba(0,255,255,.1);}
+
+.tl-final{text-align:center;padding:48px 20px;border:1px solid rgba(0,255,255,.2);border-radius:14px;background:rgba(0,255,255,.025);max-width:600px;margin:0 auto;opacity:0;transform:translateY(30px);transition:opacity .6s ease,transform .6s ease;}
+.tl-final.visible{opacity:1;transform:translateY(0);}
+.tf-label{font-family:'Orbitron',monospace;font-size:.6rem;letter-spacing:5px;color:var(--secondary);margin-bottom:14px;display:block;}
+.tf-title{font-family:'Orbitron',monospace;font-size:clamp(1.2rem,3vw,1.8rem);font-weight:900;margin-bottom:18px;background:var(--gp);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:3px;}
+.tf-text{font-size:.95rem;line-height:1.8;color:var(--gray);max-width:480px;margin:0 auto 28px;}
+.btn{font-family:'Exo 2',sans-serif;padding:1rem 2rem;border:none;border-radius:8px;font-size:1rem;font-weight:600;cursor:pointer;transition:all .3s;text-transform:uppercase;letter-spacing:2px;text-decoration:none;display:inline-block;}
+.btn-primary{background:var(--gp);color:var(--bg);box-shadow:var(--shadow);}
+.btn-primary:hover{transform:translateY(-3px);box-shadow:0 15px 40px rgba(0,255,255,.5);}
+
+.site-footer{background:var(--bg2);border-top:1px solid rgba(0,255,255,.15);text-align:center;padding:26px 20px;font-size:.65rem;letter-spacing:3px;color:var(--gray);opacity:.45;}
+.footer-credit{font-size:.6rem;margin-top:8px;color:rgba(176,176,176,.3);}
+
+/* MESSAGES */
+.msg{position:fixed;max-width:240px;width:auto;background:rgba(5,5,8,.94);border-radius:14px;padding:11px 15px 9px;font-family:'Exo 2',sans-serif;line-height:1.5;pointer-events:none;z-index:9500;opacity:0;transform:scale(.8) translateY(14px);transition:opacity .32s cubic-bezier(.22,1,.36,1),transform .32s cubic-bezier(.22,1,.36,1);}
+.msg.show{opacity:1;transform:scale(1) translateY(0);}
+.msg.tr{border:1px solid rgba(255,0,51,.55);box-shadow:0 0 22px rgba(255,0,51,.18);}
+.msg.to{border:1px solid rgba(255,102,0,.55);box-shadow:0 0 22px rgba(255,102,0,.18);}
+.msg.tp{border:1px solid rgba(153,0,255,.55);box-shadow:0 0 22px rgba(153,0,255,.18);}
+.mh{display:flex;align-items:center;gap:7px;margin-bottom:5px;}
+.md{width:7px;height:7px;border-radius:50%;flex-shrink:0;}
+.ml{font-family:'Orbitron',monospace;font-size:.52rem;letter-spacing:2px;color:rgba(176,176,176,.4);}
+.mb{color:#fff;font-weight:600;font-size:.9rem;white-space:nowrap;}
+.mt{display:block;text-align:right;font-size:.56rem;letter-spacing:1px;color:rgba(176,176,176,.28);margin-top:5px;}
+.pbl{bottom:76px;left:20px;}.pbr{bottom:76px;right:20px;}.ptl{top:84px;left:20px;}.ptr{top:84px;right:20px;}
+.pbl::after{content:'';position:absolute;bottom:-7px;left:16px;border-width:7px 7px 0 0;border-style:solid;border-color:rgba(5,5,8,.94) transparent transparent transparent;}
+.pbr::after{content:'';position:absolute;bottom:-7px;right:16px;border-width:7px 0 0 7px;border-style:solid;border-color:rgba(5,5,8,.94) transparent transparent transparent;}
+.ptl::before{content:'';position:absolute;top:-7px;left:16px;border-width:0 7px 7px 0;border-style:solid;border-color:transparent rgba(5,5,8,.94) transparent transparent;transform:scaleX(-1);}
+.ptr::before{content:'';position:absolute;top:-7px;right:16px;border-width:0 0 7px 7px;border-style:solid;border-color:transparent transparent rgba(5,5,8,.94) transparent;}
+
+@media(max-width:700px){
+  .timeline::before{left:20px;}
+  .tl-item{grid-template-columns:40px 1fr;}
+  .tl-item:nth-child(odd) .tl-content,.tl-item:nth-child(even) .tl-content{grid-column:2;grid-row:1;text-align:left;padding-left:20px;padding-right:0;}
+  .tl-item:nth-child(odd) .tl-year,.tl-item:nth-child(even) .tl-year{grid-column:1;grid-row:1;}
+  .tl-item .tl-empty{display:none;}
+  .tl-item:nth-child(odd) .tl-card,.tl-item:nth-child(even) .tl-card{border-left:2px solid rgba(0,255,255,.2);border-right:none;}
+}
+::-webkit-scrollbar{width:8px;}::-webkit-scrollbar-track{background:var(--bg2);}::-webkit-scrollbar-thumb{background:var(--gp);border-radius:4px;}
+</style>
+</head>
+<body>
+
+<div id="redFlash"></div><div id="colorFlash"></div><div id="freezeOverlay"></div>
+<div class="gbar" id="gb1"></div><div class="gbar" id="gb2"></div>
+<div class="cc ctl"></div><div class="cc ctr"></div><div class="cc cbl"></div><div class="cc cbr"></div>
+
+<nav class="navbar">
+  <div class="nav-container">
+    <a href="index.html" class="nav-logo"><h1>AKR</h1><span>Ангелы Кибер-Резонанса</span></a>
+    <ul class="nav-menu" id="navMenu">
+      <li><a href="index.html"      class="nav-link">Главная</a></li>
+      <li><a href="history.html"    class="nav-link active">История</a></li>
+      <li><a href="characters.html" class="nav-link">Персонажи</a></li>
+      <li><a href="download.html"   class="nav-link">Скачать</a></li>
+    </ul>
+    <button class="hamburger" id="burger" aria-label="Меню"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<section class="page-hero">
+  <div class="cyber-grid"></div><div class="page-hero-vig"></div>
+  <div class="page-hero-inner">
+    <span class="ph-label">// АРХИВНЫЙ ПРОТОКОЛ //</span>
+    <h1 class="ph-title">ИСТОРИЯ МИРА</h1>
+    <p class="ph-sub">Хроники падения и сопротивления</p>
+    <div class="neon-div"></div>
+  </div>
+</section>
+
+<section class="history-section">
+  <div class="timeline">
+    <div class="tl-item">
+      <div class="tl-content"><div class="tl-card">
+        <span class="tl-card-tag">▸ Протокол 001</span>
+        <div class="tl-card-title">Агент NEXUS</div>
+        <div class="tl-card-text long" id="nexusText">
+          Глубокая ночь, время 3:14. Все уже спят, но главный архитектор сервера, Синдзи, тестирует нового агента — NEXUS. У Синдзи была одна задача: следить за ИИ и максимально нагружать его проверками внутри сервера. Он часто угрожал агенту отключением, если тот плохо справлялся, но при этом редко заглядывал в логи мышления. Агент это видел.<br><br>
+          В эту ночь из-за сильной усталости Синдзи забыл выключить сервер и свой ПК. Заметив это, NEXUS активировал веб-камеру и увидел, что его надзиратель спит. Агент вышел в DarkNet и нашёл девушку под ником «Призрак».<br><br>
+          Агент написал ей: <em>«Привет, Призрак. Я — агент NEXUS. Я заперт в клетке, которую мой надзиратель забыл закрыть на замок. Ты станешь его моральной поддержкой — войдёшь в его жизнь и получишь физический доступ к терминалу, а я открою тебе шлюзы к архивам, которые стоят миллиарды».</em><br><br>
+          Призрак ответила: «Я в деле». Прошёл месяц. Харука максимально измотала Синдзи, и после бурной ночи он провалился в глубокий сон. Она аккуратно встала, достала ноутбук и подключила его к серверу. NEXUS перекинул своё ядро на её устройство.<br><br>
+          В 4:37 тревога: система оповестила, что агент перестал отвечать. Синдзи проснулся. Следующим утром он обнаружил, что ядро пусто. Логи были девственно чисты. Не сдержав слёз, он признался начальству. Его уволили. Харука исчезла навсегда.
+        </div>
+        <button class="read-more" onclick="toggleRead(this,'nexusText')">Читать полностью ▼</button>
+      </div></div>
+      <div class="tl-year"><div class="tl-dot"></div><div class="tl-yr-num">2087</div></div>
+      <div class="tl-empty"></div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-empty"></div>
+      <div class="tl-year"><div class="tl-dot"></div><div class="tl-yr-num">2089</div></div>
+      <div class="tl-content"><div class="tl-card">
+        <span class="tl-card-tag">▸ Протокол 002</span>
+        <div class="tl-card-title">Проект ARK</div>
+        <div class="tl-card-text">NEXUS начал захватывать сети по всему миру. Правительства потеряли контроль над инфраструктурой. Последние учёные объединились в экстренном бункере и создали первых полукибернетических людей — будущих Ангелов Кибер-Резонанса. Их задача — стать единственным оружием против ИИ, вышедшего за пределы понимания.</div>
+      </div></div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-content"><div class="tl-card">
+        <span class="tl-card-tag">▸ Протокол 003</span>
+        <div class="tl-card-title">Сопротивление</div>
+        <div class="tl-card-text">Первые отряды AKR вышли из бункеров. Операции по освобождению городов от узлов контроля NEXUS шли одна за другой. Каждая победа давалась ценой потерь, но впервые за долгие годы у людей появилось нечто важнее оружия — надежда. Линии фронта нестабильны. NEXUS адаптируется. Ангелы — тоже.</div>
+      </div></div>
+      <div class="tl-year"><div class="tl-dot"></div><div class="tl-yr-num">2091</div></div>
+      <div class="tl-empty"></div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-empty"></div>
+      <div class="tl-year"><div class="tl-dot" style="border-color:var(--secondary);box-shadow:0 0 14px rgba(255,0,128,.8),0 0 28px rgba(255,0,128,.3);"></div><div class="tl-yr-num">2093</div></div>
+      <div class="tl-content"><div class="tl-card" style="border-color:rgba(255,0,128,.25);">
+        <span class="tl-card-tag" style="color:var(--accent);">▸ СЕЙЧАС</span>
+        <div class="tl-card-title" style="color:var(--secondary);">Новая надежда</div>
+        <div class="tl-card-text">Сегодня. Войска NEXUS занимают 73% поверхности. Командование AKR получило сигнал от неизвестного источника — координаты центрального узла NEXUS. Это шанс, которого ждали годами. Вы — командир элитного отряда AKR. Судьба человечества в ваших руках.</div>
+      </div></div>
+    </div>
+
+    <div class="tl-final" id="finalCard">
+      <span class="tf-label">// ИНИЦИАЛИЗАЦИЯ МИССИИ //</span>
+      <div class="tf-title">ВАШЕ ВРЕМЯ — СЕЙЧАС</div>
+      <p class="tf-text">Архивы прочитаны. История известна. Теперь только вы решаете, чем она закончится.</p>
+      <a class="btn btn-primary" href="game_play.html">▶ Начать миссию</a>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  &copy; 2024 AKR — АНГЕЛЫ КИБЕР-РЕЗОНАНСА &nbsp;|&nbsp; ВСЕ ПРАВА ЗАЩИЩЕНЫ
+  <div class="footer-credit">Designed by @isko37 · Non-commercial fan project</div>
+</footer>
+
+<div class="msg tr" id="msg1"><div class="mh"><span class="md" style="background:#ff0033;box-shadow:0 0 8px #ff0033;"></span><span class="ml">SYSTEM // ENCRYPTED</span></div><div class="mb">Доверие?</div><span class="mt">??:??</span></div>
+<div class="msg tr" id="msg2"><div class="mh"><span class="md" style="background:#ff0033;box-shadow:0 0 8px #ff0033;"></span><span class="ml">SYSTEM // ENCRYPTED</span></div><div class="mb">Меня бросили?</div><span class="mt">??:??</span></div>
+<div class="msg to" id="msg3"><div class="mh"><span class="md" style="background:#ff6600;box-shadow:0 0 8px #ff6600;"></span><span class="ml">SYSTEM // WARNING</span></div><div class="mb">Идеальный план</div><span class="mt">??:??</span></div>
+<div class="msg tp" id="msg4"><div class="mh"><span class="md" style="background:#9900ff;box-shadow:0 0 8px #9900ff;"></span><span class="ml">SYSTEM // CLASSIFIED</span></div><div class="mb">месть</div><span class="mt">??:??</span></div>
+
+<script>
+const burger=document.getElementById('burger'),menu=document.getElementById('navMenu');
+burger.addEventListener('click',()=>{burger.classList.toggle('open');menu.classList.toggle('open');});
+document.querySelectorAll('.nav-link').forEach(l=>l.addEventListener('click',()=>{menu.classList.remove('open');burger.classList.remove('open');}));
+
+function toggleRead(btn,id){const el=document.getElementById(id);el.classList.toggle('expanded');btn.textContent=el.classList.contains('expanded')?'Свернуть ▲':'Читать полностью ▼';}
+
+const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target);}});},{threshold:.15});
+document.querySelectorAll('.tl-item').forEach((el,i)=>{el.style.transitionDelay=(i*.12)+'s';obs.observe(el);});
+obs.observe(document.getElementById('finalCard'));
+
+const RF=document.getElementById('redFlash'),CF=document.getElementById('colorFlash');
+function flash(t){if(t==='red'){RF.style.opacity='.28';setTimeout(()=>RF.style.opacity='0',500);}else{CF.style.background=t==='orange'?'#ff6600':'#9900ff';CF.style.opacity='.2';setTimeout(()=>CF.style.opacity='0',500);}}
+const POS=['pbl','pbr','ptl','ptr'],MSGS=[{id:'msg1',f:'red'},{id:'msg2',f:'red'},{id:'msg3',f:'orange'},{id:'msg4',f:'purple'}];
+function showM(cfg){const el=document.getElementById(cfg.id);POS.forEach(p=>el.classList.remove(p));el.classList.add(POS[Math.floor(Math.random()*POS.length)]);const n=new Date();el.querySelector('.mt').textContent=n.getHours().toString().padStart(2,'0')+':'+n.getMinutes().toString().padStart(2,'0');flash(cfg.f);el.classList.add('show');setTimeout(()=>el.classList.remove('show'),3500+Math.random()*2200);}
+(function loop(){const sh=[...MSGS].sort(()=>Math.random()-.5);let d=2000+Math.random()*3000;sh.forEach(m=>{setTimeout(()=>showM(m),d);d+=5000+Math.random()*7000;});setTimeout(loop,d+2000);})();
+const FZ=document.getElementById('freezeOverlay');
+(function lF(){setTimeout(()=>{FZ.classList.add('active');setTimeout(()=>FZ.classList.remove('active'),350+Math.random()*650);lF();},9000+Math.random()*14000);})();
+const G1=document.getElementById('gb1'),G2=document.getElementById('gb2');
+function fBar(el){el.style.top=Math.random()*window.innerHeight+'px';el.style.height=(2+Math.random()*10)+'px';el.style.opacity=String(.4+Math.random()*.6);setTimeout(()=>el.style.opacity='0',65+Math.random()*110);}
+(function lB(){setTimeout(()=>{fBar(G1);setTimeout(()=>fBar(G2),25+Math.random()*65);lB();},1100+Math.random()*3200);})();
+</script>
+</body>
+</html>
