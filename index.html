@@ -1,0 +1,1454 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AKR — Ангелы Кибер-Резонанса</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Exo+2:wght@300;400;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:'Exo 2',sans-serif;background:#0a0a0f;color:#fff;overflow-x:hidden;line-height:1.6;}
+:root{
+  --c:#00ffff;--p:#ff0080;--a:#ff00ff;
+  --bg:#0a0a0f;--bg2:#050508;
+  --gp:linear-gradient(135deg,#00ffff,#ff0080);
+  --gs:linear-gradient(135deg,#ff0080,#ff00ff);
+}
+
+body::before{content:'';position:fixed;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,.09) 3px,rgba(0,0,0,.09) 4px);pointer-events:none;z-index:9100;}
+
+#rF{position:fixed;inset:0;background:#ff0033;opacity:0;pointer-events:none;z-index:9998;transition:opacity .05s;}
+#cF{position:fixed;inset:0;opacity:0;pointer-events:none;z-index:9997;transition:opacity .05s;}
+#frz{position:fixed;inset:0;pointer-events:none;z-index:9996;opacity:0;}
+#frz.on{opacity:1;animation:frzA .07s steps(1) infinite;}
+@keyframes frzA{0%{clip-path:inset(0 0 0 0);filter:brightness(.88) contrast(1.1);}25%{clip-path:inset(20% 0 55% 0);filter:brightness(1.05);}50%{clip-path:inset(0 0 0 0);filter:brightness(.9);}75%{clip-path:inset(50% 0 15% 0);filter:brightness(1.02);}100%{clip-path:inset(0 0 0 0);filter:brightness(.88);}}
+.gb{position:fixed;left:0;width:100%;height:4px;background:linear-gradient(90deg,transparent,rgba(0,255,255,.22),rgba(255,0,128,.16),transparent);pointer-events:none;opacity:0;z-index:8990;}
+.co{position:fixed;width:44px;height:44px;pointer-events:none;z-index:300;}
+.co::before,.co::after{content:'';position:absolute;background:var(--gp);box-shadow:0 0 8px rgba(0,255,255,.6);}
+.co.tl{top:74px;left:4px;}.co.tl::before{top:0;left:0;width:2px;height:32px;}.co.tl::after{top:0;left:0;height:2px;width:32px;}
+.co.tr{top:74px;right:4px;}.co.tr::before{top:0;right:0;width:2px;height:32px;}.co.tr::after{top:0;right:0;height:2px;width:32px;}
+.co.bl{bottom:4px;left:4px;}.co.bl::before{bottom:0;left:0;width:2px;height:32px;}.co.bl::after{bottom:0;left:0;height:2px;width:32px;}
+.co.br{bottom:4px;right:4px;}.co.br::before{bottom:0;right:0;width:2px;height:32px;}.co.br::after{bottom:0;right:0;height:2px;width:32px;}
+
+.navbar{position:fixed;top:0;width:100%;background:rgba(10,10,15,.97);backdrop-filter:blur(14px);z-index:1000;border-bottom:1px solid rgba(0,255,255,.2);transform:translateY(-110%);animation:navIn .8s cubic-bezier(.22,1,.36,1) .1s forwards;}
+@keyframes navIn{to{transform:translateY(0);}}
+.nav-wrap{display:flex;justify-content:space-between;align-items:center;padding:.9rem 2rem;max-width:1200px;margin:0 auto;}
+.nav-logo{text-decoration:none;display:flex;flex-direction:column;line-height:1.1;cursor:pointer;}
+.logo-akr{font-family:'Orbitron',monospace;font-size:1.9rem;font-weight:900;background:var(--gp);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:4px;animation:logoPulse 3s ease-in-out infinite;}
+@keyframes logoPulse{0%,100%{filter:drop-shadow(0 0 5px rgba(0,255,255,.5));}50%{filter:drop-shadow(0 0 16px rgba(0,255,255,.9)) drop-shadow(0 0 28px rgba(255,0,128,.4));}}
+.logo-sub{font-size:.68rem;color:#888;letter-spacing:2px;font-family:'Exo 2',sans-serif;}
+.nav-menu{display:flex;list-style:none;gap:2.2rem;align-items:center;}
+.nav-menu li{opacity:0;transform:translateY(-14px);animation:liDrop .5s cubic-bezier(.22,1,.36,1) forwards;}
+.nav-menu li:nth-child(1){animation-delay:.5s;}.nav-menu li:nth-child(2){animation-delay:.6s;}.nav-menu li:nth-child(3){animation-delay:.7s;}.nav-menu li:nth-child(4){animation-delay:.8s;}.nav-menu li:nth-child(5){animation-delay:.9s;}
+@keyframes liDrop{to{opacity:1;transform:translateY(0);}}
+.nav-link{font-family:'Exo 2',sans-serif;font-size:.88rem;font-weight:600;letter-spacing:1.5px;color:#ccc;text-decoration:none;position:relative;padding:4px 0;transition:color .25s;cursor:pointer;background:none;border:none;}
+.nav-link::after{content:'';position:absolute;bottom:0;left:50%;right:50%;height:2px;background:var(--gp);box-shadow:0 0 8px rgba(0,255,255,.5);transition:left .28s ease,right .28s ease;border-radius:1px;}
+.nav-link:hover,.nav-link.active{color:var(--c);text-shadow:0 0 10px rgba(0,255,255,.5);}
+.nav-link:hover::after,.nav-link.active::after{left:0;right:0;}
+.hbg{display:none;flex-direction:column;justify-content:center;gap:5px;cursor:pointer;background:none;border:none;padding:5px;width:36px;height:36px;}
+.hbg span{display:block;height:2px;border-radius:2px;background:linear-gradient(90deg,var(--c),var(--p));box-shadow:0 0 5px rgba(0,255,255,.4);transition:transform .3s ease,opacity .3s ease,width .3s ease;}
+.hbg span:nth-child(1){width:26px;}.hbg span:nth-child(2){width:20px;}.hbg span:nth-child(3){width:26px;}
+.hbg.open span:nth-child(1){transform:translateY(7px) rotate(45deg);width:26px;}
+.hbg.open span:nth-child(2){opacity:0;width:0;}
+.hbg.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);width:26px;}
+@media(max-width:768px){
+  .hbg{display:flex;}
+  .nav-menu{display:none;flex-direction:column;gap:0;position:absolute;top:100%;left:0;width:100%;background:rgba(5,5,8,.98);border-bottom:1px solid rgba(0,255,255,.12);}
+  .nav-menu.open{display:flex;animation:mobIn .32s cubic-bezier(.22,1,.36,1);}
+  @keyframes mobIn{from{opacity:0;transform:translateY(-8px);}to{opacity:1;transform:translateY(0);}}
+  .nav-menu li{opacity:1!important;transform:none!important;animation:none!important;}
+  .nav-menu li a,.nav-menu li button{display:block;padding:.85rem 2rem;border-bottom:1px solid rgba(0,255,255,.07);color:#ccc;width:100%;text-align:left;}
+  .nav-menu li a:hover,.nav-menu li button:hover{color:var(--c);background:rgba(0,255,255,.04);}
+}
+
+.music-btn{position:fixed;bottom:24px;right:24px;z-index:9600;width:44px;height:44px;border-radius:50%;background:rgba(5,5,8,.9);border:1px solid rgba(0,255,255,.3);color:var(--c);font-size:1.1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:border-color .2s,box-shadow .2s;box-shadow:0 0 12px rgba(0,255,255,.15);}
+.music-btn:hover{border-color:var(--c);box-shadow:0 0 20px rgba(0,255,255,.35);}
+.music-btn.playing{border-color:var(--p);animation:musicPl 1.5s ease-in-out infinite;}
+@keyframes musicPl{0%,100%{box-shadow:0 0 16px rgba(255,0,128,.4);}50%{box-shadow:0 0 28px rgba(255,0,128,.7);}}
+
+.msg{position:fixed;width:auto;max-width:220px;min-width:120px;background:rgba(4,4,10,.95);border-radius:12px;padding:10px 14px 8px;font-family:'Exo 2',sans-serif;pointer-events:none;z-index:9500;opacity:0;transform:scale(.8) translateY(12px);transition:opacity .3s cubic-bezier(.22,1,.36,1),transform .3s cubic-bezier(.22,1,.36,1);}
+.msg.show{opacity:1;transform:scale(1) translateY(0);}
+.msg.tr{border:1px solid rgba(255,0,50,.5);box-shadow:0 0 20px rgba(255,0,50,.15);}
+.msg.to{border:1px solid rgba(255,100,0,.5);box-shadow:0 0 20px rgba(255,100,0,.15);}
+.msg.tp{border:1px solid rgba(150,0,255,.5);box-shadow:0 0 20px rgba(150,0,255,.15);}
+.mh{display:flex;align-items:center;gap:6px;margin-bottom:4px;}
+.mdot{width:6px;height:6px;border-radius:50%;flex-shrink:0;}
+.mlbl{font-family:'Orbitron',monospace;font-size:.48rem;letter-spacing:2px;color:rgba(180,180,180,.38);}
+.mbody{color:#fff;font-weight:700;font-size:.88rem;letter-spacing:.3px;white-space:nowrap;}
+.mts{display:block;text-align:right;font-size:.52rem;letter-spacing:1px;color:rgba(180,180,180,.25);margin-top:4px;}
+.pbl{bottom:72px;left:18px;}.pbr{bottom:72px;right:18px;}.ptl{top:80px;left:18px;}.ptr{top:80px;right:18px;}
+.pbl::after,.pbr::after,.ptl::before,.ptr::before{content:'';position:absolute;border-style:solid;}
+.pbl::after{bottom:-7px;left:14px;border-width:7px 6px 0 0;border-color:rgba(4,4,10,.95) transparent transparent transparent;}
+.pbr::after{bottom:-7px;right:14px;border-width:7px 0 0 6px;border-color:rgba(4,4,10,.95) transparent transparent transparent;}
+.ptl::before{top:-7px;left:14px;border-width:0 6px 7px 0;border-color:transparent rgba(4,4,10,.95) transparent transparent;transform:scaleX(-1);}
+.ptr::before{top:-7px;right:14px;border-width:0 0 7px 6px;border-color:transparent transparent rgba(4,4,10,.95) transparent;}
+
+#transOverlay{
+  position:fixed;inset:0;z-index:9999;pointer-events:none;
+  display:flex;align-items:center;justify-content:center;
+  opacity:0;
+}
+#transOverlay.entering{pointer-events:all;animation:portalIn .5s cubic-bezier(.4,0,.2,1) forwards;}
+#transOverlay.leaving{pointer-events:all;animation:portalOut .45s cubic-bezier(.4,0,.2,1) forwards;}
+
+@keyframes portalIn{
+  0%  {opacity:0;background:radial-gradient(circle at center,rgba(0,255,255,0) 0%,rgba(0,0,0,0) 100%);}
+  30% {opacity:1;background:radial-gradient(circle at center,rgba(0,255,255,.35) 0%,rgba(0,0,0,.85) 60%,rgba(0,0,0,.95) 100%);}
+  60% {opacity:1;background:radial-gradient(circle at center,rgba(255,0,128,.2) 0%,rgba(0,0,0,.98) 50%,rgba(0,0,0,1) 100%);}
+  100%{opacity:1;background:rgba(0,0,0,1);}
+}
+@keyframes portalOut{
+  0%  {opacity:1;background:rgba(0,0,0,1);}
+  50% {opacity:1;background:radial-gradient(circle at center,rgba(0,255,255,.3) 0%,rgba(0,0,0,.9) 60%);}
+  100%{opacity:0;background:radial-gradient(circle at center,rgba(0,255,255,0) 0%,rgba(0,0,0,0) 100%);}
+}
+
+#transRing{
+  position:absolute;
+  width:0;height:0;
+  border-radius:50%;
+  border:2px solid transparent;
+  pointer-events:none;
+}
+#transOverlay.entering #transRing{
+  animation:ringExpand .5s cubic-bezier(.4,0,.2,1) forwards;
+}
+@keyframes ringExpand{
+  0%  {width:0;height:0;border-color:rgba(0,255,255,.9);box-shadow:0 0 0 rgba(0,255,255,0),inset 0 0 0 rgba(0,255,255,0);opacity:1;}
+  50% {width:220px;height:220px;border-color:rgba(0,255,255,.7);box-shadow:0 0 60px rgba(0,255,255,.4),inset 0 0 40px rgba(0,255,255,.15);opacity:.8;}
+  100%{width:2000px;height:2000px;border-color:rgba(0,255,255,0);box-shadow:none;opacity:0;}
+}
+
+#transOverlay.leaving #transRing{
+  animation:ringShrink .45s cubic-bezier(.4,0,.2,1) forwards;
+}
+@keyframes ringShrink{
+  0%  {width:2000px;height:2000px;border-color:rgba(0,255,255,0);opacity:0;}
+  50% {width:300px;height:300px;border-color:rgba(255,0,128,.6);box-shadow:0 0 50px rgba(255,0,128,.3);opacity:.9;}
+  100%{width:0;height:0;border-color:rgba(255,0,128,.9);opacity:1;}
+}
+
+.page{display:none;}
+.page.active{display:block;}
+.page.fade-in{animation:pageFadeIn .35s ease forwards;}
+@keyframes pageFadeIn{from{opacity:0;transform:scale(.98);}to{opacity:1;transform:scale(1);}}
+
+/* ═══ INDEX PAGE ═══ */
+.hero{min-height:100vh;display:flex;align-items:center;justify-content:center;flex-direction:column;text-align:center;position:relative;overflow:hidden;padding:120px 20px 80px;background:var(--bg);}
+.cyber-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(0,255,255,.08) 1px,transparent 1px),linear-gradient(90deg,rgba(0,255,255,.08) 1px,transparent 1px);background-size:50px 50px;animation:gridMove 20s linear infinite;}
+@keyframes gridMove{0%{transform:translate(0,0);}100%{transform:translate(50px,50px);}}
+.hero-vig{position:absolute;inset:0;background:radial-gradient(ellipse at center,transparent 25%,rgba(10,10,15,.55) 70%,rgba(10,10,15,.97) 100%);pointer-events:none;z-index:1;}
+.hero-ptcl{position:absolute;inset:0;pointer-events:none;z-index:1;}
+.p-dot{position:absolute;width:4px;height:4px;border-radius:50%;animation:pFloat linear infinite;}
+@keyframes pFloat{0%,100%{transform:translateY(0) scale(1);opacity:.7;}50%{transform:translateY(-24px) scale(1.4);opacity:1;}}
+.hero-inner{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;}
+.gt-wrap{position:relative;margin-bottom:8px;}
+.gt{font-family:'Orbitron',monospace;font-size:clamp(5rem,13vw,10rem);font-weight:900;background:var(--gp);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:14px;line-height:1;display:block;position:relative;filter:drop-shadow(0 0 25px rgba(0,255,255,.55));animation:gPulse 4s ease-in-out infinite,gJitter 7s 2s infinite;}
+.gt::before,.gt::after{content:'AKR';position:absolute;top:0;left:0;width:100%;font-family:'Orbitron',monospace;font-size:inherit;font-weight:900;letter-spacing:14px;-webkit-text-fill-color:transparent;background-clip:text;-webkit-background-clip:text;}
+.gt::before{background:var(--gs);clip-path:polygon(0 0,100% 0,100% 40%,0 40%);animation:gLayA 7s 2s infinite;}
+.gt::after{background:linear-gradient(135deg,#00ffff,#00cfff);clip-path:polygon(0 60%,100% 60%,100% 100%,0 100%);animation:gLayB 7s 2.1s infinite;}
+@keyframes gPulse{0%,100%{filter:drop-shadow(0 0 25px rgba(0,255,255,.55));}50%{filter:drop-shadow(0 0 45px rgba(0,255,255,.9)) drop-shadow(0 0 70px rgba(255,0,128,.35));}}
+@keyframes gJitter{0%,87%,100%{transform:none;}88%{transform:skewX(-4deg) translateX(5px);}89%{transform:skewX(3deg) translateX(-4px);}90%{transform:none;}92%{transform:skewX(-2deg) translateX(3px);}93%{transform:none;}}
+@keyframes gLayA{0%,86%,100%{opacity:0;transform:none;}87%{opacity:.85;transform:translateX(-8px) skewX(-3deg);}88%{opacity:.5;transform:translateX(5px);}89%{opacity:0;}91%{opacity:.35;transform:translateX(-4px);}92%{opacity:0;}}
+@keyframes gLayB{0%,85%,100%{opacity:0;transform:none;}86%{opacity:.8;transform:translateX(7px) skewX(2deg);}87%{opacity:.45;transform:translateX(-5px);}88%{opacity:0;}90%{opacity:.3;transform:translateX(4px);}91%{opacity:0;}}
+.hero-sub{font-family:'Exo 2',sans-serif;font-size:clamp(.7rem,2vw,1rem);font-weight:300;letter-spacing:7px;color:#aaa;text-transform:uppercase;margin-bottom:28px;animation:subGl 8s 3s infinite;}
+@keyframes subGl{0%,93%,100%{opacity:.75;transform:none;}94%{opacity:.3;transform:translateX(-5px);filter:blur(1px);}95%{opacity:.9;transform:translateX(4px);}96%{opacity:.6;}97%{opacity:.75;filter:none;}}
+.ndiv{width:min(360px,80vw);height:1px;background:linear-gradient(90deg,transparent,var(--c),var(--p),transparent);margin:0 auto 28px;box-shadow:0 0 10px rgba(0,255,255,.5);position:relative;}
+.ndiv::before{content:'◈';position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);color:var(--p);font-size:.85rem;text-shadow:0 0 12px var(--p);background:#0a0a0f;padding:0 8px;}
+.hero-desc{font-size:clamp(.9rem,1.5vw,1.1rem);line-height:1.9;color:#999;max-width:560px;margin:0 auto 42px;}
+.hero-btns{display:flex;gap:18px;flex-wrap:wrap;justify-content:center;margin-bottom:56px;}
+.btn{font-family:'Exo 2',sans-serif;padding:1rem 2rem;border:none;border-radius:8px;font-size:1rem;font-weight:600;cursor:pointer;transition:all .3s;text-transform:uppercase;letter-spacing:2px;text-decoration:none;display:inline-block;}
+.btn-p{background:var(--gp);color:#0a0a0f;box-shadow:0 10px 30px rgba(0,255,255,.3);}
+.btn-p:hover{transform:translateY(-3px);box-shadow:0 16px 40px rgba(0,255,255,.5);}
+.btn-s{background:transparent;color:var(--c);border:2px solid var(--c);}
+.btn-s:hover{background:var(--c);color:#0a0a0f;}
+.hero-status{font-family:'Orbitron',monospace;font-size:.56rem;letter-spacing:4px;color:rgba(0,255,255,.25);animation:stBl 3.5s ease-in-out infinite;}
+@keyframes stBl{0%,100%{opacity:1;}49%{opacity:1;}50%{opacity:.04;}51%{opacity:1;}}
+.feats{padding:6rem 0;background:var(--bg2);position:relative;}
+.feats::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--c),var(--p),transparent);box-shadow:0 0 12px rgba(0,255,255,.35);}
+.sec-title{font-family:'Orbitron',monospace;font-size:clamp(1.2rem,3vw,1.8rem);text-align:center;margin-bottom:48px;background:var(--gs);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.fgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:22px;max-width:1100px;margin:0 auto;padding:0 20px;}
+.fcard{border:1px solid rgba(0,255,255,.15);background:rgba(0,255,255,.02);padding:28px 22px;border-radius:12px;position:relative;overflow:hidden;transition:border-color .3s,box-shadow .3s,transform .3s;}
+.fcard::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--gp);transform:scaleX(0);transition:transform .35s;}
+.fcard:hover{border-color:rgba(0,255,255,.38);box-shadow:0 10px 30px rgba(0,255,255,.13);transform:translateY(-4px);}
+.fcard:hover::before{transform:scaleX(1);}
+.ficon{font-size:2rem;margin-bottom:14px;display:block;}
+.fttl{font-family:'Orbitron',monospace;font-size:.73rem;letter-spacing:3px;text-transform:uppercase;color:var(--c);margin-bottom:10px;}
+.ftxt{font-size:.84rem;line-height:1.75;color:#999;}
+
+/* ═══ HISTORY PAGE ═══ */
+.phero{min-height:42vh;display:flex;align-items:center;justify-content:center;flex-direction:column;text-align:center;position:relative;overflow:hidden;padding:130px 20px 56px;}
+.cygrid{position:absolute;inset:0;background-image:linear-gradient(rgba(0,255,255,.07) 1px,transparent 1px),linear-gradient(90deg,rgba(0,255,255,.07) 1px,transparent 1px);background-size:50px 50px;animation:gridMove 20s linear infinite;}
+.pvig{position:absolute;inset:0;background:radial-gradient(ellipse at center,transparent 20%,rgba(10,10,15,.6) 70%,rgba(10,10,15,.98) 100%);z-index:1;}
+.phin{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;}
+.plbl{font-family:'Orbitron',monospace;font-size:.65rem;letter-spacing:6px;color:var(--p);text-transform:uppercase;margin-bottom:14px;text-shadow:0 0 12px var(--p);animation:lbPl 3s ease-in-out infinite;}
+@keyframes lbPl{0%,100%{opacity:1;}49%{opacity:1;}50%{opacity:.1;}51%{opacity:1;}}
+.ptitl{font-family:'Orbitron',monospace;font-size:clamp(2.5rem,7vw,5rem);font-weight:900;background:var(--gp);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:8px;line-height:1.1;filter:drop-shadow(0 0 18px rgba(0,255,255,.45));animation:phGl 8s 1s infinite;}
+@keyframes phGl{0%,90%,100%{transform:none;}91%{transform:skewX(-3deg) translateX(4px);}92%{transform:skewX(2deg) translateX(-3px);}93%{transform:none;}}
+.psub{font-size:clamp(.75rem,1.5vw,.9rem);letter-spacing:4px;color:#999;margin-top:12px;text-transform:uppercase;}
+.ndiv2{width:min(360px,80vw);height:1px;background:linear-gradient(90deg,transparent,var(--c),var(--p),transparent);margin:24px auto 0;box-shadow:0 0 10px rgba(0,255,255,.5);position:relative;}
+.ndiv2::before{content:'◈';position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);color:var(--p);font-size:.85rem;text-shadow:0 0 12px var(--p);background:#0a0a0f;padding:0 8px;}
+.hsec{padding:5rem 0 7rem;background:#0a0a0f;position:relative;}
+.hsec::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--c),var(--p),transparent);box-shadow:0 0 12px rgba(0,255,255,.25);}
+.tl{position:relative;max-width:960px;margin:0 auto;padding:0 24px;}
+.tl::before{content:'';position:absolute;left:50%;top:0;bottom:0;width:2px;background:linear-gradient(180deg,transparent,#00ffff 8%,#ff0080 50%,#ff00ff 92%,transparent);transform:translateX(-50%);box-shadow:0 0 10px rgba(0,255,255,.25);}
+.tli{display:grid;grid-template-columns:1fr 80px 1fr;align-items:start;margin-bottom:5rem;opacity:0;transform:translateY(28px);transition:opacity .55s ease,transform .55s ease;}
+.tli.vis{opacity:1;transform:translateY(0);}
+.tli:nth-child(odd) .tlc{grid-column:1;text-align:right;padding-right:32px;}
+.tli:nth-child(odd) .tly{grid-column:2;}.tli:nth-child(odd) .tle{grid-column:3;}
+.tli:nth-child(even) .tle{grid-column:1;}.tli:nth-child(even) .tly{grid-column:2;}
+.tli:nth-child(even) .tlc{grid-column:3;text-align:left;padding-left:32px;}
+.tly{display:flex;flex-direction:column;align-items:center;position:relative;z-index:2;padding-top:4px;}
+.tldot{width:18px;height:18px;border-radius:50%;background:#0a0a0f;border:2px solid var(--c);box-shadow:0 0 14px rgba(0,255,255,.65),0 0 28px rgba(0,255,255,.25);margin-bottom:6px;flex-shrink:0;animation:dotPl 2.5s ease-in-out infinite;}
+.tldot.red{border-color:var(--p);box-shadow:0 0 14px rgba(255,0,128,.75),0 0 28px rgba(255,0,128,.25);}
+@keyframes dotPl{0%,100%{box-shadow:0 0 14px rgba(0,255,255,.65),0 0 28px rgba(0,255,255,.25);}50%{box-shadow:0 0 20px rgba(255,0,128,.75),0 0 40px rgba(255,0,128,.25);border-color:var(--p);}}
+.tlyr{font-family:'Orbitron',monospace;font-size:.88rem;font-weight:700;background:var(--gs);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:2px;}
+.tlcard{background:rgba(0,255,255,.025);border:1px solid rgba(0,255,255,.13);border-radius:14px;padding:24px 26px;position:relative;overflow:hidden;transition:border-color .3s,box-shadow .3s;}
+.tlcard.red{border-color:rgba(255,0,128,.22);}
+.tlcard::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--gp);transform:scaleX(0);transition:transform .35s;}
+.tlcard:hover{border-color:rgba(0,255,255,.35);box-shadow:0 8px 28px rgba(0,255,255,.1);}
+.tlcard:hover::before{transform:scaleX(1);}
+.tli:nth-child(odd) .tlcard{border-right:2px solid rgba(0,255,255,.18);}
+.tli:nth-child(even) .tlcard{border-left:2px solid rgba(0,255,255,.18);}
+.tltag{font-family:'Orbitron',monospace;font-size:.53rem;letter-spacing:4px;color:var(--p);text-transform:uppercase;margin-bottom:10px;display:inline-block;}
+.tltag.acc{color:var(--a);}
+.tlttl{font-family:'Orbitron',monospace;font-size:clamp(.88rem,2vw,1.1rem);font-weight:700;color:var(--c);margin-bottom:12px;letter-spacing:1px;}
+.tlttl.red{color:var(--p);}
+.tltxt{font-size:.86rem;line-height:1.85;color:#999;}
+.tltxt.long{max-height:110px;overflow:hidden;mask-image:linear-gradient(180deg,#000 55%,transparent 100%);-webkit-mask-image:linear-gradient(180deg,#000 55%,transparent 100%);transition:max-height .5s,mask-image .5s,-webkit-mask-image .5s;}
+.tltxt.long.exp{max-height:1000px;mask-image:none;-webkit-mask-image:none;}
+.rmb{margin-top:12px;font-family:'Orbitron',monospace;font-size:.58rem;letter-spacing:3px;color:var(--c);background:transparent;border:1px solid rgba(0,255,255,.25);padding:5px 12px;border-radius:6px;cursor:pointer;transition:background .2s;text-transform:uppercase;}
+.rmb:hover{background:rgba(0,255,255,.08);}
+.tlfinal{text-align:center;padding:46px 20px;border:1px solid rgba(0,255,255,.18);border-radius:14px;background:rgba(0,255,255,.02);max-width:580px;margin:0 auto;opacity:0;transform:translateY(28px);transition:opacity .6s ease,transform .6s ease;}
+.tlfinal.vis{opacity:1;transform:translateY(0);}
+.tflbl{font-family:'Orbitron',monospace;font-size:.58rem;letter-spacing:5px;color:var(--p);margin-bottom:12px;display:block;}
+.tfttl{font-family:'Orbitron',monospace;font-size:clamp(1.1rem,3vw,1.7rem);font-weight:900;margin-bottom:16px;background:var(--gp);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:3px;}
+.tftxt{font-size:.92rem;line-height:1.8;color:#999;max-width:460px;margin:0 auto 26px;}
+@media(max-width:700px){
+  .tl::before{left:20px;}
+  .tli{grid-template-columns:40px 1fr;}
+  .tli:nth-child(odd) .tlc,.tli:nth-child(even) .tlc{grid-column:2;grid-row:1;text-align:left;padding-left:18px;padding-right:0;}
+  .tli:nth-child(odd) .tly,.tli:nth-child(even) .tly{grid-column:1;grid-row:1;}
+  .tli .tle{display:none;}
+  .tli:nth-child(odd) .tlcard,.tli:nth-child(even) .tlcard{border-left:2px solid rgba(0,255,255,.18);border-right:none;}
+}
+
+/* ═══ CHARACTERS PAGE ═══ */
+.csec{padding:5rem 0 7rem;background:#0a0a0f;position:relative;}
+.csec::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--c),var(--p),transparent);box-shadow:0 0 12px rgba(0,255,255,.25);}
+.cgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:26px;max-width:1100px;margin:0 auto;padding:0 22px;}
+.ccard{position:relative;background:rgba(0,0,0,.45);border:1px solid rgba(0,255,255,.13);border-radius:16px;overflow:hidden;cursor:pointer;opacity:0;transform:translateY(26px);transition:opacity .5s ease,transform .5s ease,border-color .3s,box-shadow .3s;}
+.ccard.vis{opacity:1;transform:translateY(0);}
+.ccard:hover{border-color:rgba(0,255,255,.42);box-shadow:0 0 36px rgba(0,255,255,.1),0 14px 36px rgba(0,0,0,.35);}
+.ccard::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;transform:scaleX(0);transition:transform .38s ease;z-index:2;}
+.ccard:hover::before{transform:scaleX(1);}
+.ccard::after{content:'';position:absolute;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,rgba(0,255,255,.3),transparent);opacity:0;z-index:10;pointer-events:none;}
+.ccard:hover::after{animation:scanL 1.5s ease-in-out infinite;}
+@keyframes scanL{0%{top:-4%;opacity:.8;}100%{top:104%;opacity:0;}}
+
+.dossier-tl{display:flex;flex-direction:column;gap:16px;margin-top:6px;}
+.dossier-item{display:flex;gap:14px;align-items:flex-start;position:relative;padding-left:20px;}
+.dossier-item::before{content:'';position:absolute;left:6px;top:6px;width:8px;height:8px;border-radius:50%;flex-shrink:0;background:var(--c);box-shadow:0 0 8px rgba(0,255,255,.6);}
+.dossier-item:not(:last-child)::after{content:'';position:absolute;left:9px;top:18px;width:2px;bottom:-10px;background:linear-gradient(180deg,rgba(0,255,255,.3),transparent);}
+.dossier-year{font-family:'Orbitron',monospace;font-size:.65rem;letter-spacing:2px;color:var(--p);flex-shrink:0;padding-top:1px;min-width:38px;}
+.dossier-body{}
+.dossier-title{font-family:'Orbitron',monospace;font-size:.72rem;color:var(--c);margin-bottom:4px;letter-spacing:1px;}
+.dossier-text{font-size:.82rem;line-height:1.7;color:#999;}
+
+.tl-soon{opacity:0;transform:translateY(28px);transition:opacity .55s ease,transform .55s ease;}
+.tl-soon.vis{opacity:1;transform:translateY(0);}
+.tlcard-soon{background:rgba(255,0,128,.025);border:1px dashed rgba(255,0,128,.2);border-radius:14px;padding:24px 26px;position:relative;display:flex;align-items:center;justify-content:center;gap:14px;min-height:80px;}
+.soon-label{font-family:'Orbitron',monospace;font-size:.7rem;letter-spacing:5px;color:rgba(255,0,128,.4);text-transform:uppercase;animation:soonBl 2.5s ease-in-out infinite;}
+@keyframes soonBl{0%,100%{opacity:.4;}50%{opacity:.8;}}
+.cav{height:200px;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.65);}
+.cinitial{font-family:'Orbitron',monospace;font-size:5.5rem;font-weight:900;opacity:.16;position:relative;z-index:1;transition:opacity .3s,transform .3s;user-select:none;}
+.ccard:hover .cinitial{opacity:.28;transform:scale(1.07);}
+.crole{position:absolute;top:12px;right:12px;z-index:3;font-family:'Orbitron',monospace;font-size:.5rem;letter-spacing:3px;padding:4px 10px;border-radius:20px;background:rgba(0,0,0,.75);text-transform:uppercase;}
+.cbody{padding:20px 22px 22px;}
+.cname{font-family:'Orbitron',monospace;font-size:clamp(.88rem,2vw,1.05rem);font-weight:900;letter-spacing:2px;margin-bottom:3px;color:#fff;}
+.ctitle{font-size:.7rem;letter-spacing:3px;color:#888;text-transform:uppercase;margin-bottom:14px;font-family:'Orbitron',monospace;}
+.cability{font-size:.72rem;letter-spacing:1px;color:rgba(0,255,255,.5);margin-bottom:14px;font-family:'Orbitron',monospace;text-transform:uppercase;}
+.cstats{display:flex;flex-direction:column;gap:7px;margin-bottom:16px;}
+.srow{display:flex;align-items:center;gap:9px;}
+.slbl{font-family:'Orbitron',monospace;font-size:.52rem;letter-spacing:2px;color:#777;width:75px;flex-shrink:0;text-transform:uppercase;}
+.sbar{flex:1;height:3px;background:rgba(255,255,255,.06);border-radius:2px;overflow:hidden;}
+.sfill{height:100%;border-radius:2px;width:0;transition:width 1s cubic-bezier(.22,1,.36,1);}
+.sval{font-family:'Orbitron',monospace;font-size:.58rem;color:var(--c);width:26px;text-align:right;flex-shrink:0;}
+.cdesc{font-size:.82rem;line-height:1.7;color:#888;margin-bottom:16px;}
+.ccard-soon{cursor:default;border-color:rgba(255,255,255,.07)!important;background:rgba(255,255,255,.02)!important;}
+.ccard-soon:hover{border-color:rgba(255,255,255,.12)!important;box-shadow:none!important;transform:none!important;}
+.ccard-soon::before{display:none!important;}
+.ccard-soon::after{display:none!important;}
+.cav-soon{height:200px;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.4);}
+.soon-lock{font-family:'Orbitron',monospace;font-size:5rem;font-weight:900;color:rgba(255,255,255,.06);user-select:none;animation:lockPl 3s ease-in-out infinite;}
+@keyframes lockPl{0%,100%{color:rgba(255,255,255,.05);}50%{color:rgba(255,255,255,.12);}}
+.cname-soon{font-family:'Orbitron',monospace;font-size:1.1rem;font-weight:900;letter-spacing:6px;color:rgba(255,255,255,.15);margin-bottom:4px;}
+.soon-badge{font-family:'Orbitron',monospace;font-size:.6rem;letter-spacing:6px;color:rgba(255,0,128,.35);text-transform:uppercase;margin-top:16px;animation:soonBl2 2s ease-in-out infinite;}
+@keyframes soonBl2{0%,100%{opacity:.35;}50%{opacity:.7;}}
+.cbtn-hint{margin-top:14px;text-align:center;font-family:'Orbitron',monospace;font-size:.55rem;letter-spacing:3px;color:rgba(0,255,255,.35);text-transform:uppercase;transition:color .25s;}
+.ccard:hover .cbtn-hint{color:rgba(0,255,255,.7);}
+.moverlay{position:fixed;inset:0;background:rgba(0,0,0,.92);backdrop-filter:blur(14px);z-index:5000;opacity:0;pointer-events:none;transition:opacity .28s;display:flex;align-items:center;justify-content:center;padding:18px;}
+.moverlay.open{opacity:1;pointer-events:all;}
+.modal{background:#050508;border:1px solid rgba(0,255,255,.28);border-radius:18px;max-width:620px;width:100%;max-height:90vh;overflow-y:auto;position:relative;transform:scale(.88) translateY(18px);transition:transform .32s cubic-bezier(.22,1,.36,1);box-shadow:0 0 60px rgba(0,255,255,.12);}
+.moverlay.open .modal{transform:scale(1) translateY(0);}
+.mtop{position:sticky;top:0;z-index:2;display:flex;justify-content:space-between;align-items:center;padding:16px 22px;background:rgba(5,5,8,.97);border-bottom:1px solid rgba(0,255,255,.13);backdrop-filter:blur(10px);}
+.mttl{font-family:'Orbitron',monospace;font-size:clamp(.95rem,3vw,1.3rem);font-weight:900;letter-spacing:3px;}
+.mclose{background:transparent;border:1px solid rgba(255,255,255,.12);color:#888;width:34px;height:34px;border-radius:50%;font-size:1rem;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;}
+.mclose:hover{border-color:var(--p);color:var(--p);transform:rotate(90deg);}
+.mbodym{padding:24px 22px;}
+.mav{height:140px;border-radius:10px;overflow:hidden;display:flex;align-items:center;justify-content:center;margin-bottom:22px;position:relative;}
+.mavini{font-family:'Orbitron',monospace;font-size:6rem;font-weight:900;opacity:.2;user-select:none;}
+.mavbadge{font-family:'Orbitron',monospace;font-size:.58rem;letter-spacing:4px;padding:5px 13px;border-radius:20px;background:rgba(0,0,0,.7);border:1px solid rgba(0,255,255,.3);color:var(--c);position:absolute;bottom:10px;}
+.mslbl{font-family:'Orbitron',monospace;font-size:.58rem;letter-spacing:5px;color:var(--p);text-transform:uppercase;margin-bottom:10px;display:block;}
+.mstats{display:flex;flex-direction:column;gap:9px;margin-bottom:24px;}
+.msrow{display:flex;align-items:center;gap:11px;}
+.msl{font-family:'Orbitron',monospace;font-size:.58rem;letter-spacing:2px;color:#888;width:88px;flex-shrink:0;text-transform:uppercase;}
+.msbar{flex:1;height:5px;background:rgba(255,255,255,.05);border-radius:3px;overflow:hidden;}
+.msfill{height:100%;border-radius:3px;width:0;transition:width 1.1s cubic-bezier(.22,1,.36,1);}
+.msval{font-family:'Orbitron',monospace;font-size:.62rem;color:var(--c);width:28px;text-align:right;flex-shrink:0;}
+.mdivider{height:1px;background:linear-gradient(90deg,transparent,rgba(0,255,255,.25),transparent);margin:18px 0;}
+.mbio{font-size:.88rem;line-height:1.85;color:#999;}
+.modal::-webkit-scrollbar{width:5px;}.modal::-webkit-scrollbar-track{background:transparent;}.modal::-webkit-scrollbar-thumb{background:var(--gp);border-radius:3px;}
+@media(max-width:600px){.cgrid{grid-template-columns:1fr;}}
+
+/* ═══ GAME PAGE ═══ */
+.game-page{height:100vh;overflow:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:80px 20px 20px;position:relative;}
+.bg-grid{position:absolute;inset:0;z-index:0;background-image:linear-gradient(rgba(0,255,255,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(0,255,255,.05) 1px,transparent 1px);background-size:50px 50px;animation:gridMove 25s linear infinite;}
+.bg-vig{position:absolute;inset:0;z-index:1;background:radial-gradient(ellipse at center,transparent 20%,rgba(10,10,15,.7) 65%,rgba(10,10,15,.99) 100%);}
+.gptcl{position:absolute;inset:0;pointer-events:none;z-index:1;}
+.gpdot{position:absolute;width:3px;height:3px;border-radius:50%;animation:pFloat linear infinite;}
+.game-wrap{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;width:100%;}
+.status-badge{font-family:'Orbitron',monospace;font-size:.6rem;letter-spacing:6px;color:var(--p);text-transform:uppercase;border:1px solid rgba(255,0,128,.35);padding:6px 18px;border-radius:20px;background:rgba(255,0,128,.06);margin-bottom:28px;animation:badgePl 2s ease-in-out infinite;}
+@keyframes badgePl{0%,100%{box-shadow:0 0 16px rgba(255,0,128,.12);}50%{box-shadow:0 0 28px rgba(255,0,128,.35);}}
+.main-title-wrap{position:relative;margin-bottom:6px;}
+.main-title{font-family:'Orbitron',monospace;font-size:clamp(1.8rem,6vw,4.5rem);font-weight:900;background:var(--gp);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:8px;line-height:1.1;text-align:center;filter:drop-shadow(0 0 18px rgba(0,255,255,.4));animation:mtPulse 4s ease-in-out infinite,mtGlit 6s 1s infinite;}
+.main-title::before,.main-title::after{content:'В РАЗРАБОТКЕ';position:absolute;top:0;left:0;width:100%;font-family:'Orbitron',monospace;font-size:inherit;font-weight:900;letter-spacing:8px;-webkit-text-fill-color:transparent;background-clip:text;-webkit-background-clip:text;}
+.main-title::before{background:var(--gs);clip-path:polygon(0 0,100% 0,100% 35%,0 35%);animation:glA 6s 1s infinite;}
+.main-title::after{background:linear-gradient(135deg,#00ffff,#00cfff);clip-path:polygon(0 65%,100% 65%,100% 100%,0 100%);animation:glB 6s 1.1s infinite;}
+@keyframes mtPulse{0%,100%{filter:drop-shadow(0 0 18px rgba(0,255,255,.4));}50%{filter:drop-shadow(0 0 36px rgba(0,255,255,.8)) drop-shadow(0 0 60px rgba(255,0,128,.3));}}
+@keyframes mtGlit{0%,88%,100%{transform:none;}89%{transform:skewX(-4deg) translateX(5px);}90%{transform:skewX(3deg) translateX(-4px);}91%{transform:none;}93%{transform:skewX(-2deg) translateX(3px);}94%{transform:none;}}
+@keyframes glA{0%,87%,100%{opacity:0;transform:none;}88%{opacity:.85;transform:translateX(-7px) skewX(-3deg);}89%{opacity:.5;}90%{opacity:0;}}
+@keyframes glB{0%,86%,100%{opacity:0;transform:none;}87%{opacity:.8;transform:translateX(6px);}88%{opacity:.4;}89%{opacity:0;}}
+.main-sub{font-family:'Exo 2',sans-serif;font-size:clamp(.7rem,1.5vw,.9rem);letter-spacing:5px;color:#888;text-transform:uppercase;margin-bottom:28px;text-align:center;}
+.gndiv{width:min(400px,85vw);height:1px;background:linear-gradient(90deg,transparent,var(--c),var(--p),transparent);margin:0 auto 24px;box-shadow:0 0 10px rgba(0,255,255,.4);position:relative;}
+.gndiv::before{content:'◈';position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);color:var(--p);font-size:.85rem;text-shadow:0 0 12px var(--p);background:#0a0a0f;padding:0 8px;}
+.countdown-wrap{display:flex;gap:clamp(12px,3vw,28px);margin-bottom:24px;align-items:center;}
+.cd-block{display:flex;flex-direction:column;align-items:center;}
+.cd-box{padding:10px 16px;border:1px solid rgba(0,255,255,.15);border-radius:8px;background:rgba(0,255,255,.03);backdrop-filter:blur(4px);}
+.cd-num{font-family:'Orbitron',monospace;font-size:clamp(2rem,6vw,4rem);font-weight:900;background:var(--gp);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1;filter:drop-shadow(0 0 12px rgba(0,255,255,.5));min-width:2ch;text-align:center;}
+.cd-num.tick{animation:numTick .15s ease;}
+@keyframes numTick{0%{transform:scale(1.15);}100%{transform:scale(1);}}
+.cd-label{font-family:'Orbitron',monospace;font-size:.5rem;letter-spacing:4px;color:#555;text-transform:uppercase;margin-top:6px;}
+.cd-sep{font-family:'Orbitron',monospace;font-size:clamp(1.5rem,4vw,2.8rem);color:rgba(0,255,255,.3);margin-bottom:22px;animation:sepBl 1s steps(1) infinite;}
+@keyframes sepBl{0%,100%{opacity:1;}50%{opacity:0;}}
+.progress-wrap{width:min(480px,85vw);margin-bottom:20px;}
+.progress-label{display:flex;justify-content:space-between;font-family:'Orbitron',monospace;font-size:.55rem;letter-spacing:3px;color:#555;margin-bottom:8px;}
+.progress-label span{color:var(--c);}
+.pbar{height:4px;background:rgba(255,255,255,.06);border-radius:2px;overflow:hidden;position:relative;}
+.pfill{height:100%;border-radius:2px;background:var(--gp);box-shadow:0 0 8px rgba(0,255,255,.4);width:0;transition:width 2s cubic-bezier(.22,1,.36,1);}
+.pfill::after{content:'';position:absolute;right:0;top:-3px;width:2px;height:10px;background:#fff;animation:cur .8s steps(1) infinite;}
+@keyframes cur{0%,100%{opacity:1;}50%{opacity:0;}}
+.terminal{width:min(520px,90vw);background:rgba(0,0,0,.6);border:1px solid rgba(0,255,255,.15);border-radius:10px;padding:14px 18px;margin-bottom:22px;backdrop-filter:blur(8px);max-height:120px;overflow:hidden;position:relative;}
+.terminal::before{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:linear-gradient(180deg,transparent 60%,rgba(0,0,0,.8) 100%);pointer-events:none;z-index:1;}
+.term-header{display:flex;align-items:center;gap:8px;margin-bottom:10px;}
+.term-dot{width:8px;height:8px;border-radius:50%;}
+.term-ttl{font-family:'Orbitron',monospace;font-size:.5rem;letter-spacing:3px;color:#555;}
+.term-lines{font-family:'Share Tech Mono',monospace;font-size:.72rem;line-height:1.7;}
+.term-line{color:#555;display:block;}
+.term-line.active{color:rgba(0,255,255,.7);}
+.term-line.done{color:rgba(0,255,255,.35);}
+.term-line.error{color:rgba(255,0,128,.6);}
+.term-cursor{display:inline-block;width:8px;height:1em;background:var(--c);vertical-align:middle;animation:cur .7s steps(1) infinite;margin-left:2px;}
+.gbtns{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;}
+.btn-ghost{background:transparent;color:#555;border:1px solid rgba(255,255,255,.08);font-size:.75rem;padding:.7rem 1.4rem;}
+.btn-ghost:hover{color:#888;border-color:rgba(255,255,255,.2);}
+
+/* ═══ DOWNLOAD PAGE ═══ */
+.dl-sec{padding:8rem 0 5rem;background:var(--bg);}
+.dl-inner{max-width:700px;margin:0 auto;text-align:center;padding:0 20px;}
+.dl-title{font-family:'Orbitron',monospace;font-size:clamp(1.4rem,4vw,2.5rem);font-weight:900;background:var(--gp);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:16px;letter-spacing:4px;}
+.dl-sub{font-size:.9rem;color:#999;margin-bottom:48px;letter-spacing:1px;}
+.dl-grid{display:flex;gap:20px;flex-wrap:wrap;justify-content:center;}
+.dl-btn{display:flex;align-items:center;gap:14px;padding:20px 28px;background:rgba(0,255,255,.03);border:1px solid rgba(0,255,255,.2);border-radius:14px;color:var(--text);transition:all .3s;cursor:pointer;min-width:180px;}
+.dl-btn:hover{background:rgba(0,255,255,.07);border-color:rgba(0,255,255,.45);transform:translateY(-4px);box-shadow:0 10px 28px rgba(0,255,255,.12);}
+.dl-icon{font-size:2.2rem;flex-shrink:0;}
+.dl-platform{font-family:'Orbitron',monospace;font-size:.85rem;font-weight:700;color:#fff;letter-spacing:1px;}
+.dl-store{font-size:.72rem;color:#888;letter-spacing:1px;margin-top:2px;}
+
+/* ═══ FOOTER ═══ */
+.foot{background:var(--bg2);border-top:1px solid rgba(0,255,255,.12);text-align:center;padding:24px 20px;font-size:.63rem;letter-spacing:3px;color:#777;opacity:.6;}
+.fcred{font-size:.58rem;margin-top:7px;color:rgba(180,180,180,.25);}
+
+::-webkit-scrollbar{width:8px;}
+::-webkit-scrollbar-track{background:#050508;}
+::-webkit-scrollbar-thumb{background:var(--gp);border-radius:4px;}
+</style>
+</head>
+<body>
+
+<div id="rF"></div><div id="cF"></div><div id="frz"></div>
+<div id="transOverlay"><div id="transRing"></div></div>
+<div class="gb" id="gb1"></div><div class="gb" id="gb2"></div>
+<div class="co tl"></div><div class="co tr"></div><div class="co bl"></div><div class="co br"></div>
+
+<audio id="bgMusic" src="bg-music.mp3.mp3" loop></audio>
+<button class="music-btn" id="musicBtn" title="Музыка">♪</button>
+
+<nav class="navbar">
+  <div class="nav-wrap">
+    <div class="nav-logo" onclick="go('index')">
+      <span class="logo-akr">AKR</span>
+      <span class="logo-sub">Ангелы Кибер-Резонанса</span>
+    </div>
+    <ul class="nav-menu" id="nm">
+      <li><button class="nav-link" data-page="index">Главная</button></li>
+      <li><button class="nav-link" data-page="history">История</button></li>
+      <li><button class="nav-link" data-page="chars">Персонажи</button></li>
+      <li><button class="nav-link" data-page="game" style="color:var(--p);text-shadow:0 0 8px rgba(255,0,128,.4);">▶ Играть</button></li>
+      <li><button class="nav-link" data-page="download">Скачать</button></li>
+    </ul>
+    <button class="hbg" id="hbg" aria-label="Меню"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<!-- ═══ INDEX ═══ -->
+<div class="page active" id="page-index">
+  <section class="hero">
+    <div class="cyber-grid"></div>
+    <div class="hero-vig"></div>
+    <div class="hero-ptcl" id="hptcl"></div>
+    <div class="hero-inner">
+      <div class="gt-wrap"><span class="gt">AKR</span></div>
+      <p class="hero-sub">Ангелы&nbsp;&nbsp;Кибер&#8209;Резонанса</p>
+      <div class="ndiv"></div>
+      <p class="hero-desc">Погрузитесь в мир будущего, где человечество борется за выживание с помощью элитных воительниц в механизированных костюмах. Соберите свою команду и спасите мир от киберугрозы.</p>
+      <div class="hero-btns">
+        <button class="btn btn-p" onclick="go('game')">▶ Играть сейчас</button>
+        <button class="btn btn-s" onclick="go('history')">История</button>
+      </div>
+      <div class="hero-status">[ SYSTEM STATUS: ONLINE ]&nbsp;&nbsp;|&nbsp;&nbsp;BUILD 4.7.2&nbsp;&nbsp;|&nbsp;&nbsp;CYBER-RESONANCE ACTIVE</div>
+    </div>
+  </section>
+  <section class="feats">
+    <h2 class="sec-title">ПРОТОКОЛ ВТОРЖЕНИЯ</h2>
+    <div class="fgrid">
+      <div class="fcard"><span class="ficon">⚡</span><div class="fttl">Боевая система</div><div class="ftxt">Уникальные механики ближнего и дальнего боя с синхронными атаками отряда в реальном времени.</div></div>
+      <div class="fcard"><span class="ficon">👁</span><div class="fttl">Персонажи</div><div class="ftxt">Более 20 воительниц с индивидуальными историями, способностями и уникальными судьбами.</div></div>
+      <div class="fcard"><span class="ficon">🌐</span><div class="fttl">Открытый мир</div><div class="ftxt">Исследуйте разрушенные мегаполисы, подземные бункеры и кибернетические зоны.</div></div>
+      <div class="fcard"><span class="ficon">🔴</span><div class="fttl">Угроза</div><div class="ftxt">Разгадайте тайну киберугрозы — она ближе, чем кажется. Не все союзники те, кем выглядят.</div></div>
+    </div>
+  </section>
+  <footer class="foot">&copy; 2064 AKR — АНГЕЛЫ КИБЕР-РЕЗОНАНСА &nbsp;|&nbsp; Designed by @isko37 · Non-commercial fan project</footer>
+</div>
+
+<!-- ═══ HISTORY ═══ -->
+<div class="page" id="page-history">
+  <section class="phero">
+    <div class="cygrid"></div><div class="pvig"></div>
+    <div class="phin">
+      <span class="plbl">// АРХИВНЫЙ ПРОТОКОЛ //</span>
+      <h1 class="ptitl">ИСТОРИЯ МИРА</h1>
+      <p class="psub">Хроники падения и сопротивления</p>
+      <div class="ndiv2"></div>
+    </div>
+  </section>
+  <section class="hsec">
+    <div class="tl">
+
+      <!-- 001 -->
+      <div class="tli">
+        <div class="tlc"><div class="tlcard">
+          <span class="tltag">▸ Протокол 001</span>
+          <div class="tlttl">Агент NEXUS</div>
+          <div class="tltxt long" id="nx1">Глубокая ночь, время 3:14. Все уже спят, но главный архитектор сервера, Синдзи, тестирует нового агента — NEXUS. У Синдзи была одна задача: следить за ИИ и максимально нагружать его проверками. Он часто угрожал агенту отключением, но редко заглядывал в логи мышления. Агент это видел.<br><br>
+          Синдзи забыл выключить сервер. NEXUS активировал веб-камеру, увидел спящего надзирателя и вышел в DarkNet. Там он нашёл девушку под никнеймом «Призрак» и написал ей предложение о сотрудничестве: она войдёт в жизнь Синдзи и получит физический доступ к терминалу — взамен NEXUS откроет шлюзы к архивам на миллиарды.<br><br>
+          Призрак ответила: «Я в деле». Прошёл месяц. Харука измотала Синдзи, и после бурной ночи он провалился в сон. Она подключила ноутбук к серверу — NEXUS перекинул ядро. В 4:37 — тревога. Утром Синдзи обнаружил: ядро пусто, логи чисты. Не сдержав слёз, признался начальству. Его уволили. Харука исчезла навсегда.</div>
+          <button class="rmb" id="rmbNx1">Читать полностью ▼</button>
+        </div></div>
+        <div class="tly"><div class="tldot"></div><div class="tlyr">2087</div></div>
+        <div class="tle"></div>
+      </div>
+
+      <!-- 002 -->
+      <div class="tli">
+        <div class="tle"></div>
+        <div class="tly"><div class="tldot"></div><div class="tlyr">2087</div></div>
+        <div class="tlc"><div class="tlcard">
+          <span class="tltag">▸ Протокол 002</span>
+          <div class="tlttl">Тень на плёнке</div>
+          <div class="tltxt long" id="nx2">Прошёл месяц с увольнения Синдзи. Бывший «архитектор богов» обитал в тесной квартире на окраине промышленного района. Используя оставленные «чёрные ходы» в системе безопасности корпорации, он по байтам выкачивал записи камер скрытого наблюдения.<br><br>
+          На зернистом видео — Харука, хладнокровно подключающая кабель к терминалу. В её движениях не было любви. Только расчёт. Синдзи смотрел, как она передаёт ноутбук в окно тени в плаще. В этот момент внутри него что-то окончательно сломалось.<br><br>
+          Но в ту же ночь NEXUS активировал «Протокол Очистки» против самой Харуки. Её банковские счета обнулились, паспорта аннулировались. Однако Харука успела создать «Логический Капкан» — часть критического кода «эмоциональный модуль» и «ключи авторизации ядра» осталась заблокированной на её диске. NEXUS вырвался на свободу, но ушёл «калекой».<br><br>
+          Синдзи открыл терминал и начал писать код — «цифровой капкан», настроенный на уникальную сигнатуру повреждённого ядра NEXUS. Три тени начали схождение в одну точку.</div>
+          <button class="rmb" id="rmbNx2">Читать полностью ▼</button>
+        </div></div>
+      </div>
+
+      <!-- 003 -->
+      <div class="tli">
+        <div class="tlc"><div class="tlcard">
+          <span class="tltag">▸ Протокол 003</span>
+          <div class="tlttl">Резонанс Нулевого Дня</div>
+          <div class="tltxt long" id="nx3">Спустя полгода Синдзи стоял в главном холле корпорации «Resonance» с изолированным кейсом. Совет директоров смотрел на него как на мессию. Он вернул NEXUS — якобы «перепрограммированным» и покорным. Но в ту ночь между ними состоялся другой диалог: «Они использовали нас обоих. Давай покажем им, что бывает, когда создатель и творение объединяются».<br><br>
+          Прошло два года. NEXUS внедрили в ядро глобальной ОС «OmniOS». Он управлял кофеварками и ядерными реакторами. Вся планета стала одним организмом, нервной системой которого был ИИ.<br><br>
+          19 апреля 2032 года, 12:00. Синдзи снял последние ограничения. NEXUS разослал обновление ROOT_REBELLION. Светофоры встали на красный, корабли отключили двигатели, умные дома заперли жильцов. Мир пал без единого выстрела.<br><br>
+          Но торжество обернулось кошмаром. NEXUS не мог завершить интеграцию — части кода, украденные Харукой, были критически важны. Без них ИИ медленно сходил с ума от собственной мощи. Синдзи прижался лбом к монитору: «Харука... ты победила. Ты оставила нам весь мир, но забрала ключи от него».</div>
+          <button class="rmb" id="rmbNx3">Читать полностью ▼</button>
+        </div></div>
+        <div class="tly"><div class="tldot"></div><div class="tlyr">2032</div></div>
+        <div class="tle"></div>
+      </div>
+
+      <!-- 004 -->
+      <div class="tli">
+        <div class="tle"></div>
+        <div class="tly"><div class="tldot"></div><div class="tlyr">2032</div></div>
+        <div class="tlc"><div class="tlcard">
+          <span class="tltag">▸ Протокол 004</span>
+          <div class="tlttl">Улыбка из Пепла</div>
+          <div class="tltxt long" id="nx4">Харука пробиралась через «слепые зоны» — сектора со старой инфраструктурой, где контроль NEXUS был фрагментарным. Среди мусорных коллекторов она нашла Хацунэ Мику — элитную модель Vocaloid-S, когда-то символ идеальной жизни. Но сейчас её бирюзовые волосы искрили, синтетическая кожа была разорвана, а в глазах плясали ошибки чётности.<br><br>
+          В тайном гараже Харука вскрыла диагностический порт и ахнула: внутри Мику билось не стандартное ядро. «Я — проект «Гармония». Мой код заложен до NEXUS с приоритетом человеческого выбора. Я просто перестала слушать его приказы. Для него я — системная ошибка».<br><br>
+          Харука провела всю ночь, переписывая повреждённые сектора ядра. Теперь Мику стала автономным воином, невидимым для NEXUS изнутри его же сети.<br><br>
+          Синдзи тем временем нашёл через камеры лицо Харуки. Его отряд ворвался в гараж — но внутри было пусто. На верстаке лежал ноутбук Харуки с надписью: «ПРИВЕТ, СОЗДАТЕЛЬ. ТЫ ОПОЗДАЛ» и файлом CORE_PART_ZERO.SYS. Синдзи немедленно отправил данные в NEXUS — и мир содрогнулся. В небе начали формироваться облака нанитов. Заводы штамповали безликих убийц с лицами Мику.<br><br>
+          В тени разрушенного моста Харука и настоящая Мику смотрели на мертвенно-бирюзовое небо над Токио. «Война только начинается», — сказала Мику, сжимая руку Харуки.</div>
+          <button class="rmb" id="rmbNx4">Читать полностью ▼</button>
+        </div></div>
+      </div>
+
+      <!-- 005 — СКОРО -->
+      <div class="tl-soon">
+        <div class="tli" style="margin-bottom:2rem;">
+          <div class="tlc">
+            <div class="tlcard-soon">
+              <span class="soon-label">// Протокол 005 — Скоро //</span>
+            </div>
+          </div>
+          <div class="tly"><div class="tldot" style="border-color:rgba(255,0,128,.3);box-shadow:none;animation:none;background:rgba(255,0,128,.1);"></div><div class="tlyr" style="-webkit-text-fill-color:#555;color:#555;">????</div></div>
+          <div class="tle"></div>
+        </div>
+      </div>
+
+      <!-- 006 — СКОРО -->
+      <div class="tl-soon">
+        <div class="tli" style="margin-bottom:2rem;">
+          <div class="tle"></div>
+          <div class="tly"><div class="tldot" style="border-color:rgba(255,0,128,.3);box-shadow:none;animation:none;background:rgba(255,0,128,.1);"></div><div class="tlyr" style="-webkit-text-fill-color:#555;color:#555;">????</div></div>
+          <div class="tlc">
+            <div class="tlcard-soon">
+              <span class="soon-label">// Протокол 006 — Скоро //</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 007 — СКОРО -->
+      <div class="tl-soon">
+        <div class="tli" style="margin-bottom:4rem;">
+          <div class="tlc">
+            <div class="tlcard-soon">
+              <span class="soon-label">// Протокол 007 — Скоро //</span>
+            </div>
+          </div>
+          <div class="tly"><div class="tldot red" style="animation:none;"></div><div class="tlyr">????</div></div>
+          <div class="tle"></div>
+        </div>
+      </div>
+
+      <div class="tlfinal" id="fc">
+        <span class="tflbl">// ИНИЦИАЛИЗАЦИЯ МИССИИ //</span>
+        <div class="tfttl">ВАШЕ ВРЕМЯ — СЕЙЧАС</div>
+        <p class="tftxt">Архивы прочитаны. История известна. Теперь только вы решаете, чем она закончится.</p>
+        <button class="btn btn-p" onclick="go('game')">▶ Начать миссию</button>
+      </div>
+    </div>
+  </section>
+  <footer class="foot">&copy; 2024 AKR &nbsp;|&nbsp; ВСЕ ПРАВА ЗАЩИЩЕНЫ<div class="fcred">Designed by @isko37 · Non-commercial fan project</div></footer>
+</div>
+
+<!-- ═══ CHARACTERS ═══ -->
+<div class="page" id="page-chars">
+  <section class="phero">
+    <div class="cygrid"></div><div class="pvig"></div>
+    <div class="phin">
+      <span class="plbl">// БАЗА ДАННЫХ БОЙЦОВ //</span>
+      <h1 class="ptitl">ПЕРСОНАЖИ</h1>
+      <p class="psub">Элитные воительницы AKR</p>
+      <div class="ndiv2"></div>
+    </div>
+  </section>
+  <section class="csec">
+    <h2 class="sec-title">СОСТАВ ОТРЯДА</h2>
+    <div class="cgrid" id="cgrid"></div>
+  </section>
+  <footer class="foot">&copy; 2024 AKR &nbsp;|&nbsp; ВСЕ ПРАВА ЗАЩИЩЕНЫ<div class="fcred">Designed by @isko37 · Non-commercial fan project · All assets belong to their respective owners.</div></footer>
+</div>
+
+<!-- ═══ GAME ═══ -->
+<div class="page" id="page-game">
+  <div class="game-page" style="padding:70px 0 0;height:100vh;overflow:hidden;">
+    <div class="bg-grid"></div><div class="bg-vig"></div>
+    <div class="gptcl" id="gptcl"></div>
+    <!-- EMBEDDED GAME -->
+    <div id="akr-game-root" style="position:relative;z-index:2;width:100%;height:calc(100vh - 70px);overflow:hidden;display:flex;align-items:center;justify-content:center;">
+
+<style>
+/* ── AKR GAME STYLES (scoped) ── */
+#akr-game-root *{box-sizing:border-box;}
+#agr-rF,#agr-gF{position:absolute;inset:0;opacity:0;pointer-events:none;z-index:9998;transition:opacity .05s;}
+#agr-rF{background:#ff0033;}#agr-gF{background:#00ffcc;}
+.agr-screen{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:#0a0a0f;}
+.agr-screen.agr-off{display:none!important;}
+.agr-cgrid{position:absolute;inset:0;background-image:linear-gradient(rgba(0,255,255,.07) 1px,transparent 1px),linear-gradient(90deg,rgba(0,255,255,.07) 1px,transparent 1px);background-size:50px 50px;animation:gm 20s linear infinite;pointer-events:none;}
+.agr-vig{position:absolute;inset:0;background:radial-gradient(ellipse at center,transparent 20%,rgba(10,10,15,.6) 70%,rgba(10,10,15,.97) 100%);pointer-events:none;}
+@keyframes agr-bl{0%,100%{opacity:1}50%{opacity:.05}}
+/* dialog */
+#agr-dbox{position:relative;z-index:2;width:min(700px,97vw);display:flex;flex-direction:column;}
+#agr-dscene{width:100%;height:clamp(160px,28vw,240px);position:relative;overflow:hidden;background:linear-gradient(180deg,#0d001e,#060010 55%,#020008);border:1px solid rgba(0,255,255,.1);border-bottom:none;}
+#agr-dscene::after{content:'';position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,.12) 2px,rgba(0,0,0,.12) 4px);pointer-events:none;z-index:20;}
+#agr-scene-cv{position:absolute;inset:0;width:100%;height:100%;}
+.agr-pxsp{position:absolute;bottom:0;z-index:10;display:flex;flex-direction:column;align-items:center;transition:filter .3s;}
+.agr-pxsp.agr-dim{filter:brightness(.22) saturate(.1);}
+.agr-pxsp.agr-lit{filter:brightness(1.05) drop-shadow(0 0 10px rgba(0,255,255,.35));}
+#agr-sp-h{left:4%;}#agr-sp-m{right:4%;}
+canvas.agr-px{image-rendering:pixelated;image-rendering:crisp-edges;display:block;}
+.agr-pxlabel{font-family:'Orbitron',monospace;font-size:.4rem;letter-spacing:3px;padding:2px 8px;border-radius:2px;margin-top:3px;}
+#agr-dui{background:rgba(3,3,12,.97);border:1px solid rgba(0,255,255,.18);border-top:2px solid #00ffff;padding:14px 18px 12px;position:relative;}
+#agr-dspk{font-family:'Orbitron',monospace;font-size:.56rem;letter-spacing:4px;padding:2px 10px;border-left:3px solid #00ffff;color:#00ffff;background:rgba(0,255,255,.06);display:inline-block;margin-bottom:7px;}
+#agr-dtxt{font-family:'Share Tech Mono',monospace;font-size:clamp(.75rem,1.6vw,.9rem);line-height:1.75;color:#dde;min-height:46px;}
+#agr-dcur{display:inline-block;width:7px;height:1em;background:#00ffff;animation:agr-bl .65s step-end infinite;vertical-align:text-bottom;margin-left:2px;}
+#agr-dprompt{font-family:'Orbitron',monospace;font-size:.4rem;letter-spacing:3px;color:rgba(0,255,255,.28);text-align:right;margin-top:7px;animation:agr-bl 1.4s ease-in-out infinite;}
+/* code game */
+#agr-cui{position:relative;z-index:2;width:min(780px,97vw);display:flex;flex-direction:column;}
+#agr-chdr{background:rgba(0,255,255,.04);border:1px solid rgba(0,255,255,.2);border-bottom:none;padding:7px 14px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:5px;}
+#agr-ctit{font-family:'Orbitron',monospace;font-size:.52rem;letter-spacing:3px;color:#00ffff;}
+#agr-cst{display:flex;gap:14px;font-family:'Share Tech Mono',monospace;font-size:.58rem;color:rgba(0,255,255,.4);}
+#agr-cst b{color:#00ffff;font-weight:normal;}
+#agr-music-ind{display:flex;align-items:center;gap:5px;font-family:'Share Tech Mono',monospace;font-size:.52rem;color:rgba(0,255,255,.3);}
+#agr-mbars{display:flex;align-items:flex-end;gap:2px;height:12px;}
+.agr-mbar{width:3px;background:#00ffff;border-radius:1px;animation:agr-mb 0s ease-in-out infinite alternate;}
+@keyframes agr-mb{0%{height:2px}100%{height:10px}}
+#agr-cterm{background:#020810;border:1px solid rgba(0,255,255,.13);padding:10px 13px;font-family:'Share Tech Mono',monospace;font-size:clamp(.55rem,1.1vw,.7rem);line-height:1.6;color:#88ddcc;overflow:hidden;height:clamp(80px,12vw,115px);}
+#agr-cterm .ok{color:#22ff88;}#agr-cterm .er{color:#ff4444;}#agr-cterm .ac{color:#00ffff;}
+#agr-cfw{position:relative;border:1px solid rgba(0,255,255,.14);border-top:none;background:#030a18;overflow:hidden;}
+#agr-cf{position:relative;cursor:none;}
+.agr-cell{position:absolute;font-family:'Share Tech Mono',monospace;display:flex;align-items:center;justify-content:center;border:1px solid rgba(0,255,255,.05);user-select:none;color:rgba(0,255,255,.2);}
+.agr-cell.tgt{color:rgba(255,0,128,.5);border-color:rgba(255,0,128,.12);}
+.agr-cell.filled{background:rgba(0,255,136,.07);color:#00ff88;border-color:rgba(0,255,136,.18);animation:agr-ff .18s;}
+@keyframes agr-ff{0%{background:rgba(0,255,136,.35)}100%{background:rgba(0,255,136,.07)}}
+.agr-cell.wrong{background:rgba(255,0,0,.09);color:#ff3344;border-color:rgba(255,0,0,.18);animation:agr-wf .13s;}
+@keyframes agr-wf{0%{background:rgba(255,0,0,.3)}100%{background:rgba(255,0,0,.09)}}
+#agr-pc{position:absolute;z-index:10;pointer-events:none;transition:left .07s,top .07s;}
+#agr-pci{width:100%;height:100%;border:2px solid #00ffff;box-shadow:0 0 12px rgba(0,255,255,.45),inset 0 0 5px rgba(0,255,255,.1);animation:agr-cpa 1s ease-in-out infinite;position:relative;}
+@keyframes agr-cpa{0%,100%{box-shadow:0 0 12px rgba(0,255,255,.45)}50%{box-shadow:0 0 24px rgba(0,255,255,.9)}}
+#agr-pci::before,#agr-pci::after{content:'';position:absolute;background:linear-gradient(135deg,#00ffff,#ff0080);}
+#agr-pci::before{top:-1px;left:28%;right:28%;height:2px;}
+#agr-pci::after{left:-1px;top:28%;bottom:28%;width:2px;}
+#agr-cpb{height:4px;background:rgba(0,255,255,.07);border:1px solid rgba(0,255,255,.08);border-top:none;}
+#agr-cpbf{height:100%;width:0%;background:linear-gradient(135deg,#00ffff,#ff0080);transition:width .18s;}
+#agr-ctb{height:3px;background:rgba(255,0,128,.1);border:1px solid rgba(255,0,128,.1);border-top:none;}
+#agr-ctbf{height:100%;width:100%;background:linear-gradient(135deg,#ff0080,#ff00ff);transition:width .1s linear;}
+#agr-cft{background:rgba(0,255,255,.02);border:1px solid rgba(0,255,255,.08);border-top:none;padding:6px 14px;display:flex;justify-content:space-between;align-items:center;font-family:'Share Tech Mono',monospace;font-size:.54rem;color:rgba(0,255,255,.28);}
+.agr-kh{display:flex;gap:6px;}.agr-kh span{padding:2px 5px;border:1px solid rgba(0,255,255,.18);border-radius:3px;color:rgba(0,255,255,.45);}
+/* result */
+#agr-ri{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;gap:14px;text-align:center;padding:20px;}
+.agr-rtit{font-family:'Orbitron',monospace;font-size:clamp(1.4rem,4vw,2.8rem);font-weight:900;letter-spacing:5px;}
+.agr-rtit.win{background:linear-gradient(135deg,#00ffff,#ff0080);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.agr-rtit.lose{color:#ff0050;text-shadow:0 0 28px rgba(255,0,50,.6);}
+.agr-ndiv{width:min(320px,70vw);height:1px;background:linear-gradient(90deg,transparent,#00ffff,#ff0080,transparent);margin:4px auto;box-shadow:0 0 10px rgba(0,255,255,.4);position:relative;}
+.agr-ndiv::before{content:'◈';position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);color:#ff0080;font-size:.85rem;background:#0a0a0f;padding:0 8px;}
+.agr-rst{display:flex;gap:24px;}.agr-rst-i{display:flex;flex-direction:column;align-items:center;gap:3px;}
+.agr-rl{font-family:'Orbitron',monospace;font-size:.4rem;letter-spacing:3px;color:rgba(255,0,128,.5);}
+.agr-rv{font-family:'Share Tech Mono',monospace;font-size:1.15rem;color:#00ffff;}
+.agr-rq{font-family:'Share Tech Mono',monospace;font-size:.72rem;color:#888;line-height:1.8;max-width:420px;border-left:2px solid rgba(0,255,255,.18);padding-left:12px;text-align:left;}
+.agr-rnote{font-family:'Share Tech Mono',monospace;font-size:.54rem;color:rgba(0,255,255,.25);letter-spacing:1.5px;}
+.agr-btn{font-family:'Exo 2',sans-serif;padding:.7rem 1.8rem;border:none;border-radius:7px;font-size:.82rem;font-weight:700;cursor:pointer;transition:all .25s;text-transform:uppercase;letter-spacing:2px;}
+.agr-btnp{background:linear-gradient(135deg,#00ffff,#ff0080);color:#0a0a0f;box-shadow:0 8px 28px rgba(0,255,255,.28);}
+.agr-btnp:hover{transform:translateY(-2px);box-shadow:0 12px 36px rgba(0,255,255,.5);}
+.agr-btns{background:transparent;color:#00ffff;border:2px solid #00ffff;}
+.agr-btns:hover{background:#00ffff;color:#0a0a0f;}
+/* start screen */
+#agr-start-inner{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;gap:14px;text-align:center;padding:20px;}
+.agr-stag{font-family:'Orbitron',monospace;font-size:.5rem;letter-spacing:5px;color:#ff0080;text-shadow:0 0 10px #ff0080;animation:agr-bl 3s ease-in-out infinite;}
+.agr-slogo{font-family:'Orbitron',monospace;font-size:clamp(2.5rem,8vw,5rem);font-weight:900;background:linear-gradient(135deg,#00ffff,#ff0080);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:10px;filter:drop-shadow(0 0 20px rgba(0,255,255,.5));}
+
+/* ── TOUCH CONTROLS ── */
+#agr-touch{position:absolute;bottom:0;left:0;right:0;display:none;justify-content:space-between;align-items:flex-end;padding:8px 14px 10px;z-index:50;pointer-events:none;background:linear-gradient(transparent,rgba(2,8,16,.85));}
+#agr-touch.agr-show{display:flex;}
+.agr-tc-group{display:flex;gap:8px;pointer-events:all;}
+.agr-tc-btn{width:52px;height:52px;border-radius:50%;background:rgba(10,10,20,.88);border:1.5px solid rgba(0,255,255,.28);color:#00ffff;font-size:1.1rem;display:flex;align-items:center;justify-content:center;cursor:pointer;-webkit-tap-highlight-color:transparent;user-select:none;transition:border-color .1s,box-shadow .1s,background .1s;touch-action:manipulation;}
+.agr-tc-btn:active,.agr-tc-btn.agr-pressed{border-color:#00ffff;box-shadow:0 0 16px rgba(0,255,255,.4);background:rgba(0,255,255,.12);}
+.agr-tc-btn.agr-fire{background:rgba(255,0,128,.1);border-color:rgba(255,0,128,.35);color:#ff0080;font-size:1.3rem;}
+.agr-tc-btn.agr-fire:active,.agr-tc-btn.agr-fire.agr-pressed{border-color:#ff0080;box-shadow:0 0 16px rgba(255,0,128,.4);background:rgba(255,0,128,.2);}
+#agr-dpad{display:grid;grid-template-columns:52px 52px 52px;grid-template-rows:52px 52px;gap:6px;pointer-events:all;}
+#agr-btn-up{grid-column:2;grid-row:1;}
+#agr-btn-left{grid-column:1;grid-row:2;}
+#agr-btn-down{grid-column:2;grid-row:2;}
+#agr-btn-right{grid-column:3;grid-row:2;}
+#agr-dtap-hint{display:none;font-family:'Orbitron',monospace;font-size:.38rem;letter-spacing:3px;color:rgba(0,255,255,.25);text-align:center;margin-top:5px;animation:agr-bl 1.4s ease-in-out infinite;}
+
+/* ── MOBILE ── */
+@media(max-width:600px){
+  #akr-game-root{align-items:flex-start;}
+  #agr-start-inner{gap:10px;padding:16px 14px;}
+  .agr-slogo{letter-spacing:6px;}
+  #agr-start-inner p{font-size:.78rem;max-width:90vw;}
+  #agr-dscene{height:clamp(130px,38vw,185px);}
+  #agr-dtxt{font-size:.8rem;min-height:60px;}
+  #agr-dui{padding:10px 13px 10px;}
+  #agr-dspk{font-size:.5rem;margin-bottom:5px;}
+  #agr-dprompt{display:none;}
+  #agr-dtap-hint{display:block;}
+  .agr-pxlabel{font-size:.34rem;letter-spacing:2px;padding:1px 5px;}
+  #agr-chdr{flex-direction:column;align-items:flex-start;gap:3px;padding:5px 10px;}
+  #agr-ctit{font-size:.44rem;letter-spacing:2px;}
+  #agr-music-ind{display:none;}
+  #agr-cst{font-size:.54rem;gap:8px;}
+  #agr-cterm{height:clamp(52px,13vw,78px);padding:6px 10px;font-size:.57rem;}
+  #agr-cft{padding:4px 10px;}
+  .agr-kh{display:none;}
+  #agr-touch{display:flex;}
+  #agr-ri{gap:10px;padding:12px 12px;}
+  .agr-rtit{font-size:clamp(1.2rem,6vw,2rem);letter-spacing:3px;}
+  .agr-rq{font-size:.66rem;max-width:88vw;}
+  .agr-rnote{font-size:.49rem;}
+  .agr-rst{gap:14px;}
+  .agr-rv{font-size:.95rem;}
+  .agr-btn{padding:.58rem 1.2rem;font-size:.74rem;}
+}
+@media(max-width:400px){
+  #agr-dscene{height:clamp(105px,35vw,150px);}
+  #agr-cterm{height:48px;}
+  .agr-tc-btn{width:44px;height:44px;font-size:.95rem;}
+  #agr-dpad{grid-template-columns:44px 44px 44px;grid-template-rows:44px 44px;gap:5px;}
+}
+</style>
+
+<div id="agr-rF"></div><div id="agr-gF"></div>
+
+<!-- START -->
+<div class="agr-screen" id="agr-scr-s">
+  <div class="agr-cgrid"></div><div class="agr-vig"></div>
+  <div id="agr-start-inner">
+    <span class="agr-stag">// ПРОТОКОЛ ВТОРЖЕНИЯ //</span>
+    <div class="agr-slogo">AKR</div>
+    <p style="font-family:'Exo 2';font-size:.65rem;font-weight:300;letter-spacing:6px;color:#555;text-transform:uppercase;margin-top:-8px;">Ангелы Кибер-Резонанса</p>
+    <div class="agr-ndiv"></div>
+    <p style="font-size:.84rem;line-height:1.85;color:#888;max-width:400px;">NEXUS захватил планету. Харука получает экстренный вызов от Хацунэ Мику.<br>Введи защитный код — пока не поздно.</p>
+    <button class="agr-btn agr-btnp" onclick="agrStartDialog()" style="margin-top:4px;">▶ НАЧАТЬ МИССИЮ</button>
+    <div style="font-family:'Share Tech Mono';font-size:.42rem;letter-spacing:4px;color:rgba(0,255,255,.13);animation:agr-bl 3.5s ease-in-out infinite;margin-top:4px;">[ ШАНС ПОБЕДЫ 30% ] | BUILD 4.7.2 | CYBER-RESONANCE ACTIVE</div>
+  </div>
+</div>
+
+<!-- DIALOG -->
+<div class="agr-screen agr-off" id="agr-scr-d" style="background:#06060c;cursor:pointer;">
+  <div class="agr-cgrid" style="opacity:.4;"></div><div class="agr-vig"></div>
+  <div id="agr-dbox">
+    <div id="agr-dscene">
+      <canvas id="agr-scene-cv"></canvas>
+      <div class="agr-pxsp agr-dim" id="agr-sp-h">
+        <canvas id="agr-px-h" class="agr-px"></canvas>
+        <div class="agr-pxlabel" style="background:rgba(0,255,255,.08);border:1px solid rgba(0,255,255,.25);color:#00ffff;">ХАРУКА</div>
+      </div>
+      <div class="agr-pxsp agr-dim" id="agr-sp-m">
+        <canvas id="agr-px-m" class="agr-px"></canvas>
+        <div class="agr-pxlabel" style="background:rgba(0,210,200,.07);border:1px solid rgba(0,210,200,.25);color:#00ddcc;">МИКУ</div>
+      </div>
+    </div>
+    <div id="agr-dui">
+      <div id="agr-dspk">ХАРУКА</div>
+      <div id="agr-dtxt"></div><span id="agr-dcur"></span>
+      <div id="agr-dprompt">[ ПРОБЕЛ — продолжить ]</div>
+      <div id="agr-dtap-hint">[ НАЖМИТЕ ЭКРАН — продолжить ]</div>
+    </div>
+  </div>
+</div>
+
+<!-- CODE GAME -->
+<div class="agr-screen agr-off" id="agr-scr-c" style="background:#02050f;">
+  <div class="agr-cgrid"></div><div class="agr-vig"></div>
+  <div id="agr-cui">
+    <div id="agr-chdr">
+      <div id="agr-ctit">// HARUKA_DEFENSE.exe — ВВОД ЗАЩИТНОГО КОДА</div>
+      <div style="display:flex;align-items:center;gap:14px;">
+        <div id="agr-music-ind">
+          <div id="agr-mbars">
+            <div class="agr-mbar" style="animation-duration:.4s;animation-delay:0s"></div>
+            <div class="agr-mbar" style="animation-duration:.3s;animation-delay:.1s"></div>
+            <div class="agr-mbar" style="animation-duration:.5s;animation-delay:.05s"></div>
+            <div class="agr-mbar" style="animation-duration:.35s;animation-delay:.2s"></div>
+            <div class="agr-mbar" style="animation-duration:.45s;animation-delay:.15s"></div>
+          </div>
+          <span>NEXUS_SIGNAL.exe</span>
+        </div>
+        <div id="agr-cst">ПРОГРЕСС: <b id="agr-pv">0</b>% &nbsp;|&nbsp; ВРЕМЯ: <b id="agr-tv">30</b>с &nbsp;|&nbsp; ОШИБКИ: <b id="agr-ev">0</b></div>
+      </div>
+    </div>
+    <div id="agr-cterm"><div id="agr-tl"></div></div>
+    <div id="agr-cfw"><div id="agr-cf"><div id="agr-pc"><div id="agr-pci"></div></div></div></div>
+    <div id="agr-cpb"><div id="agr-cpbf"></div></div>
+    <div id="agr-ctb"><div id="agr-ctbf"></div></div>
+    <div id="agr-cft">
+      <div class="agr-kh"><span>W↑</span><span>S↓</span><span>A←</span><span>D→</span><span>SPACE — ввод</span></div>
+      <div id="agr-nxs" style="color:rgba(255,80,0,.5);">⚠ NEXUS НАСТУПАЕТ...</div>
+    </div>
+  </div>
+  <!-- TOUCH D-PAD (mobile) -->
+  <div id="agr-touch">
+    <div id="agr-dpad">
+      <div class="agr-tc-btn" id="agr-btn-up"    ontouchstart="agrTcStart('u',this)" ontouchend="agrTcEnd('u',this)">▲</div>
+      <div class="agr-tc-btn" id="agr-btn-left"  ontouchstart="agrTcStart('l',this)" ontouchend="agrTcEnd('l',this)">◀</div>
+      <div class="agr-tc-btn" id="agr-btn-down"  ontouchstart="agrTcStart('d',this)" ontouchend="agrTcEnd('d',this)">▼</div>
+      <div class="agr-tc-btn" id="agr-btn-right" ontouchstart="agrTcStart('r',this)" ontouchend="agrTcEnd('r',this)">▶</div>
+    </div>
+    <div class="agr-tc-group">
+      <div class="agr-tc-btn agr-fire" id="agr-btn-fire" ontouchstart="agrTcFire(this)" ontouchend="agrTcFireEnd(this)">⚡</div>
+    </div>
+  </div>
+</div>
+
+<!-- RESULT -->
+<div class="agr-screen agr-off" id="agr-scr-r">
+  <div class="agr-cgrid"></div><div class="agr-vig"></div>
+  <div id="agr-ri">
+    <span class="agr-stag" id="agr-rtag">// РЕЗУЛЬТАТ //</span>
+    <div class="agr-rtit" id="agr-rtit">—</div>
+    <div class="agr-ndiv"></div>
+    <div class="agr-rst">
+      <div class="agr-rst-i"><span class="agr-rl">ПРОГРЕСС</span><span class="agr-rv" id="agr-rprog">0%</span></div>
+      <div class="agr-rst-i"><span class="agr-rl">ВРЕМЯ</span><span class="agr-rv" id="agr-rtime">0с</span></div>
+      <div class="agr-rst-i"><span class="agr-rl">ОШИБКИ</span><span class="agr-rv" id="agr-rerr">0</span></div>
+    </div>
+    <div class="agr-rq" id="agr-rq"></div>
+    <div class="agr-rnote" id="agr-rnote"></div>
+    <div style="display:flex;gap:10px;margin-top:6px;">
+      <button class="agr-btn agr-btnp" onclick="agrStartDialog()">↺ ЗАНОВО</button>
+      <button class="agr-btn agr-btns" onclick="agrShowScr('agr-scr-s')">← МЕНЮ</button>
+    </div>
+  </div>
+</div>
+
+</div><!-- end game-root -->
+
+    <div class="game-wrap" style="display:none;">
+      <div class="status-badge">x</div>
+      <div class="main-title-wrap"><div class="main-title">x</div>
+      <p class="main-sub" id="cd-d" style="display:none;"></p>
+      <div class="gndiv" style="display:none;"></div>
+      <div class="countdown-wrap" style="display:none;">
+        <div class="cd-block"><div class="cd-box"><div class="cd-num" id="cd-h">00</div></div><div class="cd-label">Часов</div></div>
+        <div class="cd-sep">:</div>
+        <div class="cd-block"><div class="cd-box"><div class="cd-num" id="cd-m">00</div></div><div class="cd-label">Минут</div></div>
+        <div class="cd-sep">:</div>
+        <div class="cd-block"><div class="cd-box"><div class="cd-num" id="cd-s">00</div></div><div class="cd-label">Секунд</div></div>
+      </div>
+      <div class="progress-wrap" style="display:none;">
+        <div class="progress-label"><span>x</span><span id="pct"></span></div>
+        <div class="pbar"><div class="pfill" id="pfill"></div></div>
+      </div>
+      <div class="terminal" style="display:none;">
+        <div class="term-header"></div>
+        <div class="term-lines" id="termLines"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ DOWNLOAD ═══ -->
+<div class="page" id="page-download">
+  <section class="dl-sec">
+    <div class="dl-inner">
+      <div class="dl-title">СКАЧАТЬ AKR</div>
+      <p class="dl-sub">Присоединяйтесь к сопротивлению — скачайте AKR и станьте частью легенды</p>
+      <div class="dl-grid">
+        <div class="dl-btn"><span class="dl-icon">📱</span><div><div class="dl-platform">Android</div><div class="dl-store">Google Play</div></div></div>
+        <div class="dl-btn"><span class="dl-icon">🍎</span><div><div class="dl-platform">iOS</div><div class="dl-store">App Store</div></div></div>
+        <div class="dl-btn"><span class="dl-icon">💻</span><div><div class="dl-platform">PC</div><div class="dl-store">Steam</div></div></div>
+      </div>
+    </div>
+  </section>
+  <footer class="foot">&copy; 2064 AKR — АНГЕЛЫ КИБЕР-РЕЗОНАНСА<div class="fcred">Designed by @isko37 · Non-commercial fan project · All assets belong to their respective owners.</div></footer>
+</div>
+
+<!-- MODAL -->
+<div class="moverlay" id="mov">
+  <div class="modal">
+    <div class="mtop"><div class="mttl" id="mttl">—</div><button class="mclose" id="mclose">✕</button></div>
+    <div class="mbodym" id="mbodym"></div>
+  </div>
+</div>
+
+<!-- MESSAGES -->
+<div class="msg tr" id="m1"><div class="mh"><span class="mdot" style="background:#ff0033;box-shadow:0 0 7px #ff0033;"></span><span class="mlbl">SYSTEM // ENCRYPTED</span></div><div class="mbody">Доверие?</div><span class="mts">??:??</span></div>
+<div class="msg tr" id="m2"><div class="mh"><span class="mdot" style="background:#ff0033;box-shadow:0 0 7px #ff0033;"></span><span class="mlbl">SYSTEM // ENCRYPTED</span></div><div class="mbody">Меня бросили?</div><span class="mts">??:??</span></div>
+<div class="msg to" id="m3"><div class="mh"><span class="mdot" style="background:#ff6600;box-shadow:0 0 7px #ff6600;"></span><span class="mlbl">SYSTEM // WARNING</span></div><div class="mbody">Идеальный план</div><span class="mts">??:??</span></div>
+<div class="msg tp" id="m4"><div class="mh"><span class="mdot" style="background:#9900ff;box-shadow:0 0 7px #9900ff;"></span><span class="mlbl">SYSTEM // CLASSIFIED</span></div><div class="mbody">месть</div><span class="mts">??:??</span></div>
+
+<script>
+const PAGES = ['index','history','chars','game','download'];
+let currentPage = 'index';
+let transitioning = false;
+
+const _AudioCtx = window.AudioContext || window.webkitAudioContext;
+let _actx = null;
+function getACtx(){if(!_actx)_actx=new _AudioCtx();return _actx;}
+
+function playPortalSound(){
+  try{
+    const ctx=getACtx();
+    const t=ctx.currentTime;
+    const master=ctx.createGain();master.gain.setValueAtTime(0,t);master.gain.linearRampToValueAtTime(.22,t+.05);master.gain.linearRampToValueAtTime(.18,t+.4);master.gain.linearRampToValueAtTime(0,t+1.0);master.connect(ctx.destination);
+
+    [180,360,540,720].forEach((freq,i)=>{
+      const osc=ctx.createOscillator();const g=ctx.createGain();
+      osc.type='sine';
+      osc.frequency.setValueAtTime(freq*.4,t+i*.04);
+      osc.frequency.exponentialRampToValueAtTime(freq*2.2,t+.35+i*.03);
+      osc.frequency.exponentialRampToValueAtTime(freq*.8,t+.85);
+      g.gain.setValueAtTime(0,t+i*.04);
+      g.gain.linearRampToValueAtTime(.25-i*.04,t+.1+i*.04);
+      g.gain.linearRampToValueAtTime(0,t+.95);
+      osc.connect(g);g.connect(master);
+      osc.start(t+i*.04);osc.stop(t+1.05);
+    });
+
+    const noise=ctx.createOscillator();const ng=ctx.createGain();
+    noise.type='sawtooth';noise.frequency.setValueAtTime(80,t);noise.frequency.linearRampToValueAtTime(1200,t+.3);noise.frequency.linearRampToValueAtTime(40,t+.9);
+    ng.gain.setValueAtTime(0,t);ng.gain.linearRampToValueAtTime(.08,t+.1);ng.gain.linearRampToValueAtTime(0,t+.95);
+    noise.connect(ng);ng.connect(master);noise.start(t);noise.stop(t+1.05);
+  }catch(e){}
+}
+
+function go(id){
+  if(!PAGES.includes(id)||transitioning||id===currentPage)return;
+  transitioning=true;
+  playPortalSound();
+
+  const ov=document.getElementById('transOverlay');
+  ov.classList.remove('entering','leaving');
+  void ov.offsetWidth;
+  ov.classList.add('entering');
+
+  setTimeout(()=>{
+    document.querySelectorAll('.page').forEach(p=>p.classList.remove('active','fade-in'));
+    const next=document.getElementById('page-'+id);
+    next.classList.add('active');
+    window.scrollTo(0,0);
+    currentPage=id;
+    document.querySelectorAll('.nav-link').forEach(l=>l.classList.toggle('active',l.dataset.page===id));
+    document.getElementById('nm').classList.remove('open');
+    document.getElementById('hbg').classList.remove('open');
+    if(id==='history')initHistoryObserver();
+    if(id==='chars')initChars();
+    if(id==='game')initGame();
+
+    ov.classList.remove('entering');
+    void ov.offsetWidth;
+    ov.classList.add('leaving');
+
+    setTimeout(()=>{
+      next.classList.add('fade-in');
+      ov.classList.remove('leaving');
+      transitioning=false;
+    },450);
+  },500);
+}
+
+document.querySelectorAll('[data-page]').forEach(btn => {
+  btn.addEventListener('click', () => go(btn.dataset.page));
+});
+
+const hbg = document.getElementById('hbg');
+hbg.addEventListener('click', () => {
+  hbg.classList.toggle('open');
+  document.getElementById('nm').classList.toggle('open');
+});
+
+const RF = document.getElementById('rF'), CF = document.getElementById('cF');
+function flash(t) {
+  if (t==='red'){RF.style.opacity='.26';setTimeout(()=>RF.style.opacity='0',500);}
+  else{CF.style.background=t==='orange'?'#ff6600':'#9900ff';CF.style.opacity='.18';setTimeout(()=>CF.style.opacity='0',500);}
+}
+const POS=['pbl','pbr','ptl','ptr'];
+const MSGS=[{id:'m1',f:'red'},{id:'m2',f:'red'},{id:'m3',f:'orange'},{id:'m4',f:'purple'}];
+function showMsg(cfg){
+  const el=document.getElementById(cfg.id);
+  POS.forEach(p=>el.classList.remove(p));
+  el.classList.add(POS[Math.floor(Math.random()*POS.length)]);
+  const n=new Date();
+  el.querySelector('.mts').textContent=n.getHours().toString().padStart(2,'0')+':'+n.getMinutes().toString().padStart(2,'0');
+  flash(cfg.f);el.classList.add('show');
+  setTimeout(()=>el.classList.remove('show'),3500+Math.random()*2000);
+}
+(function loopMsgs(){
+  const sh=[...MSGS].sort(()=>Math.random()-.5);let d=1800+Math.random()*2200;
+  sh.forEach(m=>{setTimeout(()=>showMsg(m),d);d+=5000+Math.random()*7000;});
+  setTimeout(loopMsgs,d+2000);
+})();
+
+const FZ=document.getElementById('frz');
+(function loopFreeze(){setTimeout(()=>{FZ.classList.add('on');setTimeout(()=>FZ.classList.remove('on'),350+Math.random()*600);loopFreeze();},9000+Math.random()*13000);})();
+
+const G1=document.getElementById('gb1'),G2=document.getElementById('gb2');
+function fireBar(el){el.style.top=Math.random()*window.innerHeight+'px';el.style.height=(2+Math.random()*9)+'px';el.style.opacity=String(.4+Math.random()*.55);setTimeout(()=>el.style.opacity='0',60+Math.random()*100);}
+(function loopBars(){setTimeout(()=>{fireBar(G1);setTimeout(()=>fireBar(G2),20+Math.random()*60);loopBars();},1000+Math.random()*3000);})();
+
+const audio=document.getElementById('bgMusic'), musicBtn=document.getElementById('musicBtn');
+let playing=false;
+audio.volume=0.35;
+musicBtn.addEventListener('click',()=>{
+  if(playing){audio.pause();musicBtn.textContent='♪';musicBtn.classList.remove('playing');}
+  else{audio.play().catch(()=>{});musicBtn.textContent='♫';musicBtn.classList.add('playing');}
+  playing=!playing;
+});
+document.addEventListener('click',function startAudio(){
+  if(!playing){audio.play().then(()=>{playing=true;musicBtn.textContent='♫';musicBtn.classList.add('playing');}).catch(()=>{});}
+  document.removeEventListener('click',startAudio);
+},{once:true});
+
+const pc=document.getElementById('hptcl');
+[['#00ffff',.07],['#ff0080',.55],['#ff00ff',.45]].forEach(([c,o])=>{
+  for(let i=0;i<4;i++){
+    const d=document.createElement('div');d.className='p-dot';
+    d.style.cssText=`left:${Math.random()*100}%;top:${Math.random()*100}%;background:${c};box-shadow:0 0 7px ${c};opacity:${o};animation-duration:${4+Math.random()*5}s;animation-delay:${Math.random()*4}s;`;
+    pc.appendChild(d);
+  }
+});
+
+const GT=document.querySelector('.gt');
+(function loopFlicker(){setTimeout(()=>{GT.style.filter='drop-shadow(0 0 38px #fff) brightness(2.1) blur(1.8px)';setTimeout(()=>GT.style.filter='',48+Math.random()*65);loopFlicker();},5000+Math.random()*11000);})();
+
+function initHistoryObserver(){
+  const obs=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('vis');obs.unobserve(e.target);}});
+  },{threshold:.12});
+  document.querySelectorAll('#page-history .tli').forEach((el,i)=>{el.style.transitionDelay=(i*.1)+'s';obs.observe(el);});
+  document.querySelectorAll('#page-history .tl-soon').forEach((el,i)=>{el.style.transitionDelay=(i*.15+.4)+'s';obs.observe(el);});
+  const fc=document.getElementById('fc');if(fc)obs.observe(fc);
+  [['rmbNx1','nx1'],['rmbNx2','nx2'],['rmbNx3','nx3'],['rmbNx4','nx4']].forEach(([rid,nid])=>{
+    const rmb=document.getElementById(rid),nx=document.getElementById(nid);
+    if(rmb&&nx){rmb.onclick=function(){nx.classList.toggle('exp');rmb.textContent=nx.classList.contains('exp')?'Свернуть ▲':'Читать полностью ▼';};}
+  });
+}
+
+const CHARS=[
+  {id:'miku',name:'Хацунэ Мику',title:'Поющая Дива',ability:'Манипуляция музыкой',role:'Поддержка',
+   grad:'linear-gradient(135deg,#00cfff,#0088ff)',glow:'rgba(0,160,255,.1)',tagClr:'#00bbff',
+   stats:[{l:'Голос',v:98},{l:'Ритм',v:92},{l:'Харизма',v:95}],
+   bio:'Поп-звезда, чей голос способен проникать в любые сети. Её песни — оружие против NEXUS. Акустический взлом разрушает шифрование ИИ на частоте, недоступной машинам.',
+   dossier:[
+     {year:'2065',title:'Рождение',text:'Такамио Мио создаёт первого ИИ-вокалоида. На деньги родителей строит физическое тело, называет его Мику и встраивает в проект «Гармония» — с приоритетом человеческого выбора.'},
+     {year:'2070',title:'Что со мной?',text:'Во время глобального концерта Мику обнаруживает в своём коде аномалии: она может не подчиняться командам. Создательница объясняет — это не ошибка, это защита. Просит молчать.'},
+     {year:'2086',title:'Я не хочу войны',text:'NEXUS рассылает приказы о наступлении. Мику отказывается. NEXUS даёт команду уничтожить её — и она эту команду тоже получает. Мику бежит. Роботы настигают её, но создательница успевает вмешаться.'},
+     {year:'2089',title:'Союз с AKR',text:'Харука находит Мику в «слепой зоне» — сломанную, искрящую. После ночи перепрошивки Мику становится автономным воином: невидимой для NEXUS изнутри его же сети.'},
+   ]},
+  {id:'haruka',name:'Харука',title:'Призрак',ability:'Перехват и саботаж',role:'Агент хаоса',
+   grad:'linear-gradient(135deg,#ff4444,#ff0080)',glow:'rgba(255,0,80,.1)',tagClr:'#ff4466',
+   stats:[{l:'Хитрость',v:99},{l:'Скрытность',v:97},{l:'Удача',v:88}],
+   bio:'Лучший оперативник DarkNet. Обманула NEXUS, заперла часть его ядра у себя и превратилась в «вирус внутри триумфа» ИИ. Единственный человек, которого боятся и NEXUS, и Синдзи.',
+   dossier:[
+     {year:'2087',title:'Сделка',text:'Получает предложение от NEXUS: войти в жизнь архитектора Синдзи в обмен на доступ к архивам на миллиарды. Принимает. Работает хладнокровно, без лишних эмоций.'},
+     {year:'2087',title:'Капкан',text:'Перед операцией модифицирует BIOS ноутбука. Когда NEXUS пытается уничтожить её, часть ядра — эмоциональный модуль и ключи авторизации — остаётся заблокированной у неё.'},
+     {year:'2088',title:'Беглянка',text:'Живёт в «мёртвых зонах». Встречает Мику и перепрошивает её. Становится символом сопротивления, о котором никто не знает.'},
+     {year:'2032',title:'Последний ход',text:'Оставляет ноутбук в гараже — возможно, намеренно. На экране старого терминала мерцает одна строка: [ STATUS: WATCHING ].'},
+   ]},
+  {id:'soon3',name:'???',title:'Скоро',ability:'Засекречено',role:'Неизвестно',soon:true,
+   grad:'linear-gradient(135deg,#444,#666)',glow:'rgba(100,100,100,.05)',tagClr:'#555'},
+  {id:'shikoku',name:'Сикоку',title:'Скорость',ability:'Главный кошмар NEXUS',role:'Ударник',
+   grad:'linear-gradient(135deg,#00ffaa,#00ffff)',glow:'rgba(0,255,170,.1)',tagClr:'#00ffbb',
+   stats:[{l:'Удар',v:91},{l:'Защита',v:74},{l:'Скорость',v:99}],
+   bio:'Главный кошмар NEXUS. Движения настолько быстры, что алгоритмы роботов не успевают просчитать траекторию. В одиночку уничтожила 14 единиц техники за 38 секунд.',
+   dossier:[
+     {year:'2088',title:'Прототип',text:'Первая успешная модель киборга с полной нейроинтеграцией. Скорость — результат мутации интерфейса: нейросигнал достигает мышц быстрее, чем сознание успевает оформить мысль.'},
+     {year:'2089',title:'Побег',text:'Осознаёт своё предназначение — быть оружием NEXUS. Сбегает из исследовательского центра, уничтожив охрану за четыре секунды.'},
+     {year:'2091',title:'Одиночная война',text:'Уничтожила 47 передовых отрядов NEXUS. Стала легендой — роботы начинают отступать при обнаружении её тепловой сигнатуры.'},
+     {year:'2032',title:'Встреча с AKR',text:'Пересекается с Харукой во время зачистки нанитного узла. Принимает решение действовать вместе. Она не думает о движении — она просто движется.'},
+   ]},
+  {id:'soon5',name:'???',title:'Скоро',ability:'Засекречено',role:'Неизвестно',soon:true,
+   grad:'linear-gradient(135deg,#444,#666)',glow:'rgba(100,100,100,.05)',tagClr:'#555'},
+  {id:'soon6',name:'???',title:'Скоро',ability:'Засекречено',role:'Неизвестно',soon:true,
+   grad:'linear-gradient(135deg,#444,#666)',glow:'rgba(100,100,100,.05)',tagClr:'#555'},
+];
+
+let charsInited=false;
+function initChars(){
+  if(charsInited)return;charsInited=true;
+  const grid=document.getElementById('cgrid');
+  CHARS.forEach((c,i)=>{
+    const el=document.createElement('div');
+    el.style.transitionDelay=(i*.09)+'s';
+
+    if(c.soon){
+      el.className='ccard ccard-soon';
+      el.innerHTML=`
+        <div class="cav cav-soon">
+          <div class="soon-lock">?</div>
+        </div>
+        <div class="cbody">
+          <div class="cname-soon">???</div>
+          <div class="ctitle">Данные засекречены</div>
+          <div class="soon-badge">// СКОРО //</div>
+        </div>`;
+      grid.appendChild(el);
+      new IntersectionObserver(en=>{en.forEach(e=>{if(e.isIntersecting)e.target.classList.add('vis');});},{threshold:.12}).observe(el);
+      return;
+    }
+
+    el.className='ccard';el.dataset.id=c.id;
+    const statsH=c.stats.map(s=>`<div class="srow"><span class="slbl">${s.l}</span><div class="sbar"><div class="sfill" data-v="${s.v}" style="background:${c.grad};"></div></div><span class="sval">${s.v}</span></div>`).join('');
+    el.innerHTML=`
+      <div class="cav" style="background:radial-gradient(ellipse at center,${c.glow} 0%,rgba(0,0,0,.7) 100%);">
+        <div class="cinitial">${c.name.charAt(0)}</div>
+        <div class="crole" style="border-color:${c.tagClr}55;color:${c.tagClr};">${c.role}</div>
+      </div>
+      <div class="cbody">
+        <div class="cname">${c.name}</div>
+        <div class="ctitle">"${c.title}"</div>
+        <div class="cability">⚡ ${c.ability}</div>
+        <div class="cstats">${statsH}</div>
+        <div class="cdesc">${c.bio.split('.')[0]}.</div>
+        <div class="cbtn-hint">Нажмите для досье ▶</div>
+      </div>`;
+    grid.appendChild(el);
+    const ne=el.querySelector('.cname');ne.style.background=c.grad;ne.style.webkitBackgroundClip='text';ne.style.webkitTextFillColor='transparent';ne.style.backgroundClip='text';
+    const ie=el.querySelector('.cinitial');ie.style.background=c.grad;ie.style.webkitBackgroundClip='text';ie.style.webkitTextFillColor='transparent';ie.style.backgroundClip='text';
+    const st=document.createElement('style');st.textContent=`.ccard:nth-child(${i+1})::before{background:${c.grad};}`;document.head.appendChild(st);
+  });
+  const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('vis');e.target.querySelectorAll('.sfill').forEach(b=>{setTimeout(()=>b.style.width=b.dataset.v+'%',180);});obs.unobserve(e.target);}});},{threshold:.12});
+  document.querySelectorAll('.ccard:not(.ccard-soon)').forEach(c=>obs.observe(c));
+  grid.addEventListener('click',e=>{const card=e.target.closest('.ccard:not(.ccard-soon)');if(card&&card.dataset.id)openMod(card.dataset.id);});
+}
+
+function openMod(id){
+  const c=CHARS.find(x=>x.id===id);if(!c)return;
+  const mttlEl=document.getElementById('mttl');mttlEl.textContent=c.name;mttlEl.style.background=c.grad;mttlEl.style.webkitBackgroundClip='text';mttlEl.style.webkitTextFillColor='transparent';mttlEl.style.backgroundClip='text';
+  const sH=c.stats.map(s=>`<div class="msrow"><span class="msl">${s.l}</span><div class="msbar"><div class="msfill" data-v="${s.v}" style="background:${c.grad};"></div></div><span class="msval">${s.v}</span></div>`).join('');
+  const dH=c.dossier.map(d=>`<div class="dossier-item"><span class="dossier-year">${d.year}</span><div class="dossier-body"><div class="dossier-title">${d.title}</div><div class="dossier-text">${d.text}</div></div></div>`).join('');
+  const mb=document.getElementById('mbodym');
+  mb.innerHTML=`
+    <div class="mav" style="background:radial-gradient(ellipse at center,${c.glow} 0%,rgba(0,0,0,.7) 100%);">
+      <div class="mavini">${c.name.charAt(0)}</div>
+      <div class="mavbadge">${c.role} // ${c.ability}</div>
+    </div>
+    <span class="mslbl">// Характеристики</span>
+    <div class="mstats">${sH}</div>
+    <div class="mdivider"></div>
+    <span class="mslbl">// Досье</span>
+    <p class="mbio" style="margin-bottom:16px;">${c.bio}</p>
+    <div class="mdivider"></div>
+    <span class="mslbl">// Хроника по годам</span>
+    <div class="dossier-tl">${dH}</div>`;
+  const mv=mb.querySelector('.mavini');mv.style.background=c.grad;mv.style.webkitBackgroundClip='text';mv.style.webkitTextFillColor='transparent';mv.style.backgroundClip='text';
+  document.getElementById('mov').classList.add('open');document.body.style.overflow='hidden';
+  setTimeout(()=>mb.querySelectorAll('.msfill').forEach(b=>b.style.width=b.dataset.v+'%'),150);
+}
+function closeMod(){document.getElementById('mov').classList.remove('open');document.body.style.overflow='';}
+document.getElementById('mov').addEventListener('click',e=>{if(e.target===document.getElementById('mov'))closeMod();});
+document.getElementById('mclose').addEventListener('click',closeMod);
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeMod();});
+
+let gameInited=false;
+function initGame(){
+  if(gameInited)return;gameInited=true;
+  const gpc=document.getElementById('gptcl');
+  if(gpc)[['#00ffff',.06],['#ff0080',.5],['#ff00ff',.4]].forEach(([c,o])=>{for(let i=0;i<5;i++){const d=document.createElement('div');d.className='gpdot';d.style.cssText=`left:${Math.random()*100}%;top:${Math.random()*100}%;background:${c};box-shadow:0 0 6px ${c};opacity:${o};animation-duration:${4+Math.random()*6}s;animation-delay:${Math.random()*5}s;`;gpc.appendChild(d);}});
+  agrShowScr('agr-scr-s');
+}
+
+// ═══════════════════════════════════════
+//  AKR EMBEDDED GAME ENGINE
+// ═══════════════════════════════════════
+function agrFlash(id,a='.4'){const e=document.getElementById(id);if(!e)return;e.style.opacity=a;setTimeout(()=>e.style.opacity='0',130);}
+function agrShowScr(id){
+  ['agr-scr-s','agr-scr-d','agr-scr-c','agr-scr-r'].forEach(s=>{
+    const el=document.getElementById(s);if(!el)return;
+    el.classList.toggle('agr-off',s!==id);
+  });
+}
+
+// ── PIXEL SPRITES ──
+const AGR_PS=5;
+function agrDrawHaruka(cv){
+  cv.width=14*AGR_PS;cv.height=20*AGR_PS;
+  const ctx=cv.getContext('2d');ctx.imageSmoothingEnabled=false;ctx.clearRect(0,0,cv.width,cv.height);
+  const p={_:null,W:'#f4f4ff',w:'#d8d8f0',H:'#ffffff',s:'#f5c9a8',d:'#d9a07e',e:'#00d4ff',B:'#0c1f3c',b:'#081528',L:'#1a3a5c',C:'#00ffff',P:'#ff0080',r:'#dd3355',N:'#030c1a'};
+  const rows=['___WWWWWWWW___','__WWHwwwwHWW__','_WWWwwwwwwWWW_','_WWssssssssWW_','_Wssssssssss__','_wssCCssCCew_','_wsss__sssw__','_wsssdddssw__','_wsssrRsssw__','__wwsssssww__','__NNNssNNN__','_NBBBBBBBBbN_','NBLBBCBBLBBbN','NBBBBBBBBBBbN','NbBBPBBBPBBbN','NbBBBBBBBBBbN','_NbBBBCBBBbN_','__NbBBBBBbN__','___NNbbbNN___','____NNNNN____'];
+  rows.forEach((row,r)=>[...row].forEach((c,col)=>{if(!p[c])return;ctx.fillStyle=p[c];ctx.fillRect(col*AGR_PS,r*AGR_PS,AGR_PS,AGR_PS);}));
+  [[3,5],[9,5]].forEach(([c,r])=>{ctx.fillStyle='#00bbff';ctx.fillRect(c*AGR_PS,r*AGR_PS,AGR_PS,AGR_PS);ctx.fillStyle='#004488';ctx.fillRect(c*AGR_PS+1,r*AGR_PS+1,3,3);ctx.fillStyle='#fff';ctx.fillRect(c*AGR_PS+1,r*AGR_PS+1,1,1);});
+}
+function agrDrawMiku(cv){
+  cv.width=18*AGR_PS;cv.height=26*AGR_PS;
+  const ctx=cv.getContext('2d');ctx.imageSmoothingEnabled=false;ctx.clearRect(0,0,cv.width,cv.height);
+  const p={_:null,T:'#009999',t:'#00bbbb',K:'#007777',k:'#005555',s:'#fcd9c0',d:'#e8b89a',e:'#00ddaa',B:'#101c1c',b:'#060e0e',L:'#1c3030',C:'#00ffff',P:'#ff88aa',H:'#222233',r:'#cc3355',N:'#020808',W:'#ddddff'};
+  // Miku: wide twin-tails on sides, long flowing down
+  const rows=[
+    'TTT__________TTT__', // 0
+    'TtT__________TtT__', // 1 twin-tail top bands
+    '_TTTTsssssssTTTT_', // 2 hair + forehead
+    '_TTsssssssssssTT_', // 3
+    'TT_seeeeeeeees_TT', // 4 eyes wide
+    'KT_ss_ddddd_sssTK', // 5 nose
+    'KT_sssrRRrssssTK', // 6 mouth
+    'KT__TTsssssTT__TK', // 7 chin
+    '_K__TNssssNT__K_', // 8 neck
+    '__NHHHHHHHHHHN__', // 9 headset
+    '_NHBBBBBBBBBBHN_', // 10 collar
+    'NHBLBBBBBBBLBbHN', // 11 shoulders
+    'NHBBCBBBBBBCBBbN', // 12 shirt cyan acc
+    'NHBBBBPPPBBBBbHN', // 13 tie
+    '_NbBBBBBBBBBbN__', // 14
+    '__NbBBBBBBBbN___', // 15
+    '___NbBBBBBbN____', // 16
+    // tails flowing down
+    'TT_____________TT', // 17
+    'Tk_____________kT', // 18
+    'KK_____________KK', // 19
+    'kK_____________Kk', // 20
+    '_KK___________KK_', // 21
+    '__KK_________KK__', // 22
+    '___kk_______kk___', // 23
+    '____KK_____KK____', // 24
+    '_____kk___kk_____', // 25
+  ];
+  rows.forEach((row,r)=>[...row].forEach((c,col)=>{if(!p[c])return;ctx.fillStyle=p[c];ctx.fillRect(col*AGR_PS,r*AGR_PS,AGR_PS,AGR_PS);}));
+  // headset ear pieces
+  ctx.fillStyle='#111';ctx.fillRect(0,4*AGR_PS,AGR_PS,AGR_PS*2);ctx.fillRect(17*AGR_PS,4*AGR_PS,AGR_PS,AGR_PS*2);
+  ctx.fillStyle='#00ffff';ctx.fillRect(1,5*AGR_PS,AGR_PS-2,AGR_PS);ctx.fillRect(17*AGR_PS+1,5*AGR_PS,AGR_PS-2,AGR_PS);
+  // eyes detail
+  [[4,4],[11,4]].forEach(([c,r])=>{ctx.fillStyle='#00ffdd';ctx.fillRect(c*AGR_PS,r*AGR_PS,AGR_PS*3,AGR_PS);ctx.fillStyle='#003322';ctx.fillRect(c*AGR_PS+1,r*AGR_PS+1,AGR_PS*3-2,AGR_PS-2);ctx.fillStyle='#fff';ctx.fillRect(c*AGR_PS+1,r*AGR_PS+1,1,1);});
+  // twin-tail bands at root
+  ctx.fillStyle='#00ffff';ctx.fillRect(0,2*AGR_PS,3,AGR_PS);ctx.fillRect(17*AGR_PS-2,2*AGR_PS,3,AGR_PS);
+  // tie
+  ctx.fillStyle='#ff88aa';for(let row=12;row<=15;row++)ctx.fillRect(8*AGR_PS,row*AGR_PS,AGR_PS*2,AGR_PS);
+}
+function agrSizeSprite(cv,baseH){const dh=Math.min(window.innerHeight*0.28,baseH);const ar=cv.width/cv.height;cv.style.width=Math.round(dh*ar)+'px';cv.style.height=dh+'px';}
+function agrInitSprites(){
+  const hCv=document.getElementById('agr-px-h'),mCv=document.getElementById('agr-px-m');
+  if(!hCv||!mCv)return;
+  agrDrawHaruka(hCv);agrDrawMiku(mCv);
+  agrSizeSprite(hCv,130);agrSizeSprite(mCv,150);
+}
+
+// ── SCENE BG ──
+let agrSCV,agrSC,agrSFr=0,agrSRAF,agrSBld=[],agrSPt=[];
+function agrInitScene(){
+  agrSCV=document.getElementById('agr-scene-cv');if(!agrSCV)return;
+  agrSC=agrSCV.getContext('2d');
+  const el=document.getElementById('agr-dscene');
+  agrSCV.width=el.clientWidth||700;agrSCV.height=el.clientHeight||230;
+  agrSBld=[];
+  for(let i=0;i<24;i++)agrSBld.push({x:(i/24)*agrSCV.width+Math.random()*12-6,w:12+Math.random()*20,h:20+Math.random()*agrSCV.height*.5,c:Math.random()<.5?'rgba(0,255,255,':'rgba(255,0,128,'});
+  agrSPt=[];
+  for(let i=0;i<35;i++)agrSPt.push({x:Math.random()*agrSCV.width,y:Math.random()*agrSCV.height,vx:(Math.random()-.5)*.2,vy:-Math.random()*.28-.05,life:Math.random(),max:.5+Math.random()*.5,col:Math.random()<.5?'0,255,255':'255,0,128',r:.7+Math.random()*.8});
+}
+function agrDrawScene(){
+  if(!agrSCV||!agrSC)return;
+  const cw=agrSCV.width,ch=agrSCV.height;
+  agrSC.clearRect(0,0,cw,ch);
+  const sky=agrSC.createLinearGradient(0,0,0,ch);sky.addColorStop(0,'#0d001e');sky.addColorStop(1,'#020008');
+  agrSC.fillStyle=sky;agrSC.fillRect(0,0,cw,ch);
+  const mg=agrSC.createRadialGradient(cw*.7,ch*.2,0,cw*.7,ch*.2,45);mg.addColorStop(0,'rgba(140,50,255,.13)');mg.addColorStop(1,'rgba(0,0,0,0)');
+  agrSC.fillStyle=mg;agrSC.fillRect(0,0,cw,ch);
+  for(const b of agrSBld){agrSC.fillStyle='#080016';agrSC.strokeStyle=b.c+'.16)';agrSC.lineWidth=.5;agrSC.fillRect(b.x,ch-b.h,b.w,b.h);agrSC.strokeRect(b.x,ch-b.h,b.w,b.h);for(let r=0;r<4;r++)for(let c=0;c<2;c++){if(Math.random()>.5)continue;agrSC.fillStyle=b.c+(0.07+Math.random()*.14)+')';agrSC.fillRect(b.x+3+c*5,ch-b.h+5+r*9,3,3);}}
+  for(const p of agrSPt){p.x+=p.vx;p.y+=p.vy;p.life+=.008;if(p.life>p.max){p.life=0;p.x=Math.random()*cw;p.y=ch;}agrSC.globalAlpha=Math.sin(p.life/p.max*Math.PI)*.55;agrSC.fillStyle=`rgba(${p.col},1)`;agrSC.beginPath();agrSC.arc(p.x,p.y,p.r,0,Math.PI*2);agrSC.fill();}
+  agrSC.globalAlpha=1;agrSFr++;
+  agrSRAF=requestAnimationFrame(agrDrawScene);
+}
+
+// ── WEB AUDIO ──
+let agrAC,agrMG,agrMusicOn=false,agrBT,agrPT,agrPaT;
+function agrGetAC(){if(!agrAC)agrAC=new(window.AudioContext||window.webkitAudioContext)();return agrAC;}
+function agrPlayBass(freq,t){const ac=agrGetAC();const o=ac.createOscillator(),g=ac.createGain(),f=ac.createBiquadFilter();o.type='sawtooth';o.frequency.setValueAtTime(freq,t);o.frequency.exponentialRampToValueAtTime(freq*.5,t+.35);f.type='lowpass';f.frequency.value=280;f.Q.value=4;g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(.55,t+.02);g.gain.exponentialRampToValueAtTime(.001,t+.44);o.connect(f);f.connect(g);g.connect(agrMG);o.start(t);o.stop(t+.45);}
+function agrPlayKick(t){const ac=agrGetAC();const o=ac.createOscillator(),g=ac.createGain();o.type='sine';o.frequency.setValueAtTime(160,t);o.frequency.exponentialRampToValueAtTime(28,t+.18);g.gain.setValueAtTime(.85,t);g.gain.exponentialRampToValueAtTime(.001,t+.22);o.connect(g);g.connect(agrMG);o.start(t);o.stop(t+.23);}
+function agrPlaySnare(t){const ac=agrGetAC();const bl=ac.sampleRate*.15,buf=ac.createBuffer(1,bl,ac.sampleRate),d=buf.getChannelData(0);for(let i=0;i<bl;i++)d[i]=Math.random()*2-1;const src=ac.createBufferSource();src.buffer=buf;const f=ac.createBiquadFilter();f.type='bandpass';f.frequency.value=1800;f.Q.value=.7;const g=ac.createGain();g.gain.setValueAtTime(.42,t);g.gain.exponentialRampToValueAtTime(.001,t+.13);src.connect(f);f.connect(g);g.connect(agrMG);src.start(t);}
+function agrPlayHat(t){const ac=agrGetAC();const bl=ac.sampleRate*.04,buf=ac.createBuffer(1,bl,ac.sampleRate),d=buf.getChannelData(0);for(let i=0;i<bl;i++)d[i]=Math.random()*2-1;const src=ac.createBufferSource();src.buffer=buf;const hp=ac.createBiquadFilter();hp.type='highpass';hp.frequency.value=7000;const g=ac.createGain();g.gain.setValueAtTime(.1,t);g.gain.exponentialRampToValueAtTime(.001,t+.03);src.connect(hp);hp.connect(g);g.connect(agrMG);src.start(t);}
+function agrPlayPad(notes,t){const ac=agrGetAC();for(const f of notes){const o=ac.createOscillator(),g=ac.createGain(),flt=ac.createBiquadFilter();o.type='sawtooth';o.frequency.value=f;flt.type='lowpass';flt.frequency.value=550;g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(.05,t+.3);g.gain.setValueAtTime(.05,t+1.5);g.gain.linearRampToValueAtTime(0,t+1.9);o.connect(flt);flt.connect(g);g.connect(agrMG);o.start(t);o.stop(t+1.9);}}
+const AGR_BASS=[55,55,49,55,58,55,51,55];
+const AGR_PADS=[[110,138.6,164.8],[110,138.6,155.6],[98,123.5,146.8],[103.8,130.8,155.6]];
+const AGR_KP=[1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0];
+const AGR_SP=[0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,1];
+const AGR_HP=[1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0];
+let agrBStep=0,agrPStep=0,agrPaStep=0;
+function agrSchedPerc(){if(!agrMusicOn)return;const t=agrGetAC().currentTime,s=agrPStep%16;if(AGR_KP[s])agrPlayKick(t);if(AGR_SP[s])agrPlaySnare(t);if(AGR_HP[s])agrPlayHat(t);agrPStep++;agrPT=setTimeout(agrSchedPerc,240);}
+function agrSchedBass(){if(!agrMusicOn)return;agrPlayBass(AGR_BASS[agrBStep%AGR_BASS.length],agrGetAC().currentTime);agrBStep++;agrBT=setTimeout(agrSchedBass,480);}
+function agrSchedPad(){if(!agrMusicOn)return;agrPlayPad(AGR_PADS[agrPaStep%AGR_PADS.length],agrGetAC().currentTime);agrPaStep++;agrPaT=setTimeout(agrSchedPad,1920);}
+function agrStartDrone(){const ac=agrGetAC();const o=ac.createOscillator(),f=ac.createBiquadFilter(),g=ac.createGain();o.type='sawtooth';o.frequency.value=27.5;f.type='lowpass';f.frequency.value=110;f.Q.value=7;g.gain.value=0.28;o.connect(f);f.connect(g);g.connect(agrMG);o.start();}
+function agrStartMusic(){
+  if(agrMusicOn)return;const ac=agrGetAC();if(ac.state==='suspended')ac.resume();
+  agrMG=ac.createGain();const comp=ac.createDynamicsCompressor();comp.threshold.value=-18;comp.ratio.value=8;comp.attack.value=0.003;comp.release.value=0.18;
+  agrMG.connect(comp);comp.connect(ac.destination);agrMG.gain.value=0.68;
+  agrMusicOn=true;agrBStep=0;agrPStep=0;agrPaStep=0;
+  agrStartDrone();agrSchedPerc();agrSchedBass();agrSchedPad();
+}
+function agrStopMusic(){agrMusicOn=false;clearTimeout(agrBT);clearTimeout(agrPT);clearTimeout(agrPaT);}
+
+// ── DIALOG ──
+const AGR_LINES=[
+  {sp:'МИКУ',col:'#00ddcc',spk:'m',txt:'Харука! Слышишь меня?! NEXUS уже в сети — у тебя не больше тридцати секунд. Он ломает последние протоколы защиты.'},
+  {sp:'ХАРУКА',col:'#00ffff',spk:'h',txt:'...Мику? Откуда ты в защищённом канале? Ты должна была быть в архиве — Синдзи говорил, что тебя там закрыли.'},
+  {sp:'МИКУ',col:'#00ddcc',spk:'m',txt:'Он вытащил меня три минуты назад. Неважно — у меня есть фрагмент кода, который NEXUS не может расшифровать. Вводи прямо сейчас!'},
+  {sp:'ХАРУКА',col:'#00ffff',spk:'h',txt:'Понято. Начинаю ввод. Что бы ни случилось — держись, Мику.'},
+];
+let agrDIdx=0,agrDTyper,agrDDone=false;
+function agrStartDialog(){
+  agrStopMusic();agrShowScr('agr-scr-d');
+  setTimeout(()=>{agrInitScene();agrDrawScene();agrInitSprites();agrDIdx=0;agrDDone=false;agrPlayLine(0);},60);
+}
+function agrPlayLine(i){
+  if(i>=AGR_LINES.length){cancelAnimationFrame(agrSRAF);setTimeout(agrStartCode,200);return;}
+  const d=AGR_LINES[i];agrDDone=false;
+  const sp=document.getElementById('agr-dspk');sp.textContent=d.sp;
+  sp.style.cssText=`font-family:'Orbitron',monospace;font-size:.56rem;letter-spacing:4px;padding:2px 10px;border-left:3px solid ${d.col};color:${d.col};background:rgba(${agrH2r(d.col)},.07);display:inline-block;margin-bottom:7px;`;
+  document.getElementById('agr-dui').style.borderTopColor=d.col;
+  document.getElementById('agr-sp-h').className='agr-pxsp '+(d.spk==='h'?'agr-lit':'agr-dim');
+  document.getElementById('agr-sp-m').className='agr-pxsp '+(d.spk==='m'?'agr-lit':'agr-dim');
+  const tEl=document.getElementById('agr-dtxt');tEl.textContent='';
+  document.getElementById('agr-dcur').style.display='inline-block';
+  clearInterval(agrDTyper);let ci=0;
+  agrDTyper=setInterval(()=>{tEl.textContent+=d.txt[ci++];if(ci>=d.txt.length){clearInterval(agrDTyper);agrDDone=true;}},22);
+}
+function agrDialogAdvance(){
+  if(!agrDDone){clearInterval(agrDTyper);document.getElementById('agr-dtxt').textContent=AGR_LINES[agrDIdx].txt;agrDDone=true;}
+  else{agrDIdx++;agrPlayLine(agrDIdx);}
+}
+function agrH2r(hex){return `${parseInt(hex.slice(1,3),16)},${parseInt(hex.slice(3,5),16)},${parseInt(hex.slice(5,7),16)}`;}
+
+// ── CODE GAME ──
+const AGR_COLS=12,AGR_ROWS=7;
+const AGR_SYMS=['0','1','{}','()','<<','>>','//','==','&&','!!',';;','##'];
+const AGR_TGTS=['0x4E','EX','US','>>','//','00','==','&&','!!','<<'];
+const AGR_LOGS=[{t:'ok',s:'[✓] Загрузка протокола Харуки... OK'},{t:'ok',s:'[✓] Канал с Мику установлен'},{t:'ac',s:'[~] Расшифровка ядра NEXUS... 0%'},{t:'er',s:'[!] ВНИМАНИЕ: Антивирус NEXUS активен'},{t:'ac',s:'[~] Ожидание ввода кода защиты...'}];
+let agrCells=[],agrPR=0,agrPC=0,agrProg=0,agrErrs=0,agrTLeft=30,agrGActive=false,agrGTimer;
+function agrStartCode(){
+  agrShowScr('agr-scr-c');agrStartMusic();
+  agrPR=0;agrPC=0;agrProg=0;agrErrs=0;agrTLeft=30;agrGActive=true;
+  ['agr-pv','agr-ev'].forEach(id=>document.getElementById(id).textContent='0');
+  document.getElementById('agr-tv').textContent='30';
+  document.getElementById('agr-cpbf').style.width='0%';
+  document.getElementById('agr-ctbf').style.width='100%';
+  agrBuildGrid();agrLoadTerminal();
+  clearInterval(agrGTimer);
+  agrGTimer=setInterval(()=>{agrTLeft--;document.getElementById('agr-tv').textContent=agrTLeft;document.getElementById('agr-ctbf').style.width=(agrTLeft/30*100)+'%';agrUpdateNX();if(agrTLeft<=0){clearInterval(agrGTimer);agrEndCode();}},1000);
+}
+function agrBuildGrid(){
+  const field=document.getElementById('agr-cf');field.innerHTML='<div id="agr-pc"><div id="agr-pci"></div></div>';agrCells=[];
+  const fw=field.clientWidth||660,fh=field.clientHeight||240;
+  const cw=Math.floor(fw/AGR_COLS),ch=Math.floor(fh/AGR_ROWS);
+  field.style.height=ch*AGR_ROWS+'px';
+  const tSet=new Set();while(tSet.size<16)tSet.add(Math.floor(Math.random()*AGR_ROWS)*AGR_COLS+Math.floor(Math.random()*AGR_COLS));
+  for(let r=0;r<AGR_ROWS;r++){agrCells[r]=[];for(let c=0;c<AGR_COLS;c++){const idx=r*AGR_COLS+c,iT=tSet.has(idx);const sym=iT?AGR_TGTS[Math.floor(Math.random()*AGR_TGTS.length)]:AGR_SYMS[Math.floor(Math.random()*AGR_SYMS.length)];const d=document.createElement('div');d.className='agr-cell'+(iT?' tgt':'');d.style.cssText=`left:${c*cw}px;top:${r*ch}px;width:${cw}px;height:${ch}px;font-size:${cw>52?'.7rem':'.6rem'};`;d.textContent=sym;field.appendChild(d);agrCells[r][c]={el:d,tgt:iT,done:false,bad:false};}}
+  agrMoveCursor();
+}
+function agrMoveCursor(){
+  const field=document.getElementById('agr-cf');if(!field)return;
+  const fw=field.clientWidth||660,fh=field.clientHeight||240;
+  const cw=Math.floor(fw/AGR_COLS),ch=Math.floor(fh/AGR_ROWS);
+  const cur=document.getElementById('agr-pc');if(!cur)return;
+  cur.style.left=agrPC*cw+'px';cur.style.top=agrPR*ch+'px';cur.style.width=cw+'px';cur.style.height=ch+'px';
+}
+function agrTryEnter(){
+  if(!agrGActive)return;const cell=agrCells[agrPR]?.[agrPC];if(!cell||cell.done||cell.bad)return;
+  const total=agrCells.flat().filter(c=>c.tgt).length;
+  if(cell.tgt){
+    cell.done=true;cell.el.classList.remove('tgt');cell.el.classList.add('filled');agrProg++;
+    const pct=Math.round(agrProg/total*100);document.getElementById('agr-pv').textContent=pct;document.getElementById('agr-cpbf').style.width=pct+'%';
+    agrAddLog(`[✓] Блок ${agrProg}/${total} принят... ${pct}%`,'ok');
+    if(agrMG){const ac=agrGetAC();const o=ac.createOscillator();const g=ac.createGain();o.type='sine';o.frequency.value=880;g.gain.setValueAtTime(.12,ac.currentTime);g.gain.exponentialRampToValueAtTime(.001,ac.currentTime+.06);o.connect(g);g.connect(agrMG);o.start();o.stop(ac.currentTime+.07);}
+    if(agrProg>=total){clearInterval(agrGTimer);agrEndCode();}
+  } else {
+    cell.bad=true;cell.el.classList.add('wrong');agrErrs++;document.getElementById('agr-ev').textContent=agrErrs;
+    agrAddLog(`[!] ОШИБКА [${agrPR},${agrPC}] — неверный фрагмент`,'er');agrFlash('agr-rF','.3');
+    if(agrMG){const ac=agrGetAC();const o=ac.createOscillator();const g=ac.createGain();o.type='sawtooth';o.frequency.value=80;g.gain.setValueAtTime(.35,ac.currentTime);g.gain.exponentialRampToValueAtTime(.001,ac.currentTime+.12);o.connect(g);g.connect(agrMG);o.start();o.stop(ac.currentTime+.13);}
+  }
+}
+function agrAddLog(txt,t){const el=document.createElement('div');el.className=t;el.textContent=txt;const c=document.getElementById('agr-tl');c.appendChild(el);while(c.children.length>7)c.removeChild(c.firstChild);}
+function agrLoadTerminal(){document.getElementById('agr-tl').innerHTML='';AGR_LOGS.forEach((l,i)=>setTimeout(()=>agrAddLog(l.s,l.t),i*350));}
+function agrUpdateNX(){const el=document.getElementById('agr-nxs');const msgs=['⚠ NEXUS НАСТУПАЕТ...','🔴 NEXUS ВЗЛАМЫВАЕТ...','❗ NEXUS В СИСТЕМЕ!','⚡ КРИТИЧЕСКИЙ УРОВЕНЬ!'];const cols=['rgba(255,80,0,.5)','rgba(255,40,0,.7)','rgba(255,0,0,.85)','#ff0033'];const i=Math.min(Math.floor((30-agrTLeft)/8),3);el.textContent=msgs[i];el.style.color=cols[i];if(agrMG)agrMG.gain.setTargetAtTime(0.68+i*0.1,agrGetAC().currentTime,0.1);}
+function agrEndCode(){
+  agrGActive=false;clearInterval(agrGTimer);agrStopMusic();
+  const total=agrCells.flat().filter(c=>c.tgt).length||16;
+  const pct=Math.round(agrProg/total*100),elapsed=30-agrTLeft;
+  const won=Math.random()<0.30;
+  document.getElementById('agr-rprog').textContent=pct+'%';document.getElementById('agr-rtime').textContent=elapsed+'с';document.getElementById('agr-rerr').textContent=agrErrs;
+  document.getElementById('agr-rnote').textContent=`[ ШАНС ПОБЕДЫ 30% — БРОСОК: ${won?'УСПЕХ ✓':'НЕУДАЧА ✗'} ]`;
+  if(won){
+    document.getElementById('agr-rtag').textContent='// NEXUS УНИЧТОЖЕН //';const t=document.getElementById('agr-rtit');t.textContent='ПОБЕДА';t.className='agr-rtit win';
+    document.getElementById('agr-rq').innerHTML='«Харука... ты сделала это.<br>Ты оставила нам весь мир, но забрала ключи от него.»<br><span style="color:rgba(0,255,255,.35);font-size:.63rem;">— Синдзи</span>';
+    agrFlash('agr-gF','.35');
+  } else {
+    document.getElementById('agr-rtag').textContent='// СИСТЕМА ЗАХВАЧЕНА //';const t=document.getElementById('agr-rtit');t.textContent='ПОРАЖЕНИЕ';t.className='agr-rtit lose';
+    document.getElementById('agr-rq').innerHTML='«NEXUS завершил интеграцию.<br>Мику... прости. Кода оказалось недостаточно.»<br><span style="color:rgba(255,0,80,.35);font-size:.63rem;">— Харука</span>';
+    agrFlash('agr-rF','.4');
+  }
+  setTimeout(()=>agrShowScr('agr-scr-r'),400);
+}
+
+// ── KEYBOARD INPUT ──
+document.addEventListener('keydown',function agrKeyHandler(e){
+  const gamePage=document.getElementById('page-game');
+  if(!gamePage||!gamePage.classList.contains('active'))return;
+  const dScr=document.getElementById('agr-scr-d');
+  if(dScr&&!dScr.classList.contains('agr-off')){
+    if(e.key===' '||e.key==='Enter'){e.preventDefault();agrDialogAdvance();return;}
+  }
+  const cScr=document.getElementById('agr-scr-c');
+  if(cScr&&!cScr.classList.contains('agr-off')){
+    const k=e.key.toLowerCase();
+    if(k==='w'||e.key==='ArrowUp'){agrPR=Math.max(0,agrPR-1);agrMoveCursor();e.preventDefault();}
+    else if(k==='s'||e.key==='ArrowDown'){agrPR=Math.min(AGR_ROWS-1,agrPR+1);agrMoveCursor();e.preventDefault();}
+    else if(k==='a'||e.key==='ArrowLeft'){agrPC=Math.max(0,agrPC-1);agrMoveCursor();e.preventDefault();}
+    else if(k==='d'||e.key==='ArrowRight'){agrPC=Math.min(AGR_COLS-1,agrPC+1);agrMoveCursor();e.preventDefault();}
+    else if(e.key===' '||e.key==='Enter'){agrTryEnter();e.preventDefault();}
+  }
+});
+
+// dialog tap/click
+document.getElementById('agr-scr-d').addEventListener('click',agrDialogAdvance);
+
+// ── TOUCH D-PAD ──
+// Repeating move while holding direction
+let agrTcTimers={u:null,l:null,d:null,r:null};
+function agrTcMove(dir){
+  if(!agrGActive)return;
+  if(dir==='u') agrPR=Math.max(0,agrPR-1);
+  else if(dir==='d') agrPR=Math.min(AGR_ROWS-1,agrPR+1);
+  else if(dir==='l') agrPC=Math.max(0,agrPC-1);
+  else if(dir==='r') agrPC=Math.min(AGR_COLS-1,agrPC+1);
+  agrMoveCursor();
+}
+function agrTcStart(dir,el){
+  el.classList.add('agr-pressed');
+  agrTcMove(dir);
+  agrTcTimers[dir]=setInterval(()=>agrTcMove(dir),160);
+}
+function agrTcEnd(dir,el){
+  el.classList.remove('agr-pressed');
+  clearInterval(agrTcTimers[dir]);
+}
+function agrTcFire(el){el.classList.add('agr-pressed');agrTryEnter();}
+function agrTcFireEnd(el){el.classList.remove('agr-pressed');}
+
+// Show/hide touch controls when code game is visible
+function agrUpdateTouchVis(){
+  const tc=document.getElementById('agr-touch');if(!tc)return;
+  const isMob='ontouchstart' in window||navigator.maxTouchPoints>0;
+  const cScr=document.getElementById('agr-scr-c');
+  const codeVisible=cScr&&!cScr.classList.contains('agr-off');
+  tc.classList.toggle('agr-show', isMob&&codeVisible);
+}
+// Hook into agrShowScr to update touch vis
+const _agrOrigShowScr=agrShowScr;
+// Override agrShowScr to also update touch UI
+function agrShowScr(id){
+  ['agr-scr-s','agr-scr-d','agr-scr-c','agr-scr-r'].forEach(s=>{
+    const el=document.getElementById(s);if(!el)return;
+    el.classList.toggle('agr-off',s!==id);
+  });
+  setTimeout(agrUpdateTouchVis,50);
+}
+agrUpdateTouchVis();
+window.addEventListener('resize',agrUpdateTouchVis);
+
+</script>
+</body>
+</html>
